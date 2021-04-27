@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "941203396206",
+    "project_id": "portoun-94af9",
+    "storage_bucket": "portoun-94af9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941203396206:android:3f9e2dbbfa00493257787f",
+        "android_client_info": {
+          "package_name": "com.example.portoun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941203396206-6ptvsbg9mt1ntmen1ljdhi56r6qtl0rh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbB_vMv7dqbdSf3eAT-sjA3sWaa1jn2kQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941203396206-6ptvsbg9mt1ntmen1ljdhi56r6qtl0rh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "941203396206-kca6gmrhc0r9ekp2j58e0f3kgba5i80k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.portoun"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
