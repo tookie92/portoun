@@ -8,24 +8,29 @@ class MyText extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextOverflow? overflow;
   final TextAlign? textAlign;
+  final double? letterSpacing;
 
   MyText(
       {required this.label,
       this.color,
       this.fontSize,
+      this.letterSpacing,
       this.fontWeight,
       this.overflow,
       this.textAlign});
 
   @override
   Widget build(BuildContext context) {
-    return Text(label!,
-        textAlign: textAlign,
-        overflow: overflow,
-        style: GoogleFonts.fjallaOne(
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          color: color,
-        ));
+    return Text(
+      label!,
+      textAlign: textAlign,
+      overflow: overflow,
+      style: GoogleFonts.montserrat(
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+        letterSpacing: letterSpacing,
+      ),
+    );
   }
 }

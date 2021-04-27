@@ -56,7 +56,8 @@ class Accueil extends StatelessWidget {
                         child: MyTextButton(
                           label: 'enter',
                           onPressed: () {
-                            Navigator.push(context, BlocRouter().homePage());
+                            Navigator.pushReplacement(
+                                context, BlocRouter().homePage());
                           },
                           backgroundColor: Colors.white,
                           colorText: Colors.black,
