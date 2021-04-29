@@ -191,6 +191,25 @@ class HomePage extends StatelessWidget {
   showCategorie(DocumentSnapshot res, BuildContext context) {
     CategorieModel categorieModel = CategorieModel.fromSnapShot(res);
     final size = MediaQuery.of(context).size;
+    // var mark = categorieModel.priority;
+    Color? clr;
+
+    switch (categorieModel.priority) {
+      case 'Done': // Enter this block if mark == 0
+        clr = Colors.blue;
+        break;
+
+      case 'In Process': // Enter this block if mark == 1 or mark == 2 or mark == 3
+        clr = Colors.red;
+        break;
+
+      case 'In Process': // Enter this block if mark == 1 or mark == 2 or mark == 3
+        clr = Colors.deepOrangeAccent;
+        break;
+      // etc.
+      default:
+        clr = Colors.green;
+    }
 
     var item = Padding(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
@@ -198,7 +217,7 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               height: 300.0,
-              width: 200.0,
+              width: 280.0,
               decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.circular(05.0)),
@@ -209,8 +228,7 @@ class HomePage extends StatelessWidget {
                 child: Container(
                   height: 200.0,
                   width: 200.0,
-                  decoration: BoxDecoration(
-                      color: Colors.redAccent, shape: BoxShape.circle),
+                  decoration: BoxDecoration(color: clr, shape: BoxShape.circle),
                 )),
             Positioned(
                 top: size.height * 0.20,
@@ -237,7 +255,7 @@ class HomePage extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: ()  {
+                      onPressed: () {
                         print('ok');
                       },
                       icon: Icon(

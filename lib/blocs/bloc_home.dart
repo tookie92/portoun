@@ -32,6 +32,7 @@ class BlocHome extends Bloc {
 
 class HomeState {
   final bool isActive;
+  String? priority;
   CollectionReference? collectionReference;
   CategorieModel? categorieModel;
   List<CategorieModel>? categorielist;

@@ -81,6 +81,13 @@ class EditPage extends StatelessWidget {
   showThat(DocumentSnapshot res, BuildContext context) {
     CategorieModel categorieModel = CategorieModel.fromSnapShot(res);
     final _formKey = GlobalKey<FormState>();
+    String? _priority;
+    var items = [
+      'Pending',
+      'Done',
+      'In Process',
+    ];
+
     // final size = MediaQuery.of(context).size;
 
     var item = Column(children: [
@@ -109,8 +116,40 @@ class EditPage extends StatelessWidget {
               height: 20.0,
             ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container())
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: DropdownButtonFormField(
+                isDense: true,
+                icon: Icon(Icons.arrow_drop_down_circle),
+                iconSize: 22.0,
+                iconEnabledColor: Theme.of(context).primaryColor,
+                items: items.map((String priority) {
+                  return DropdownMenuItem(
+                    value: priority,
+                    child: Text(
+                      priority,
+                      style: TextStyle(color: Colors.black, fontSize: 18.0),
+                    ),
+                  );
+                }).toList(),
+                style: TextStyle(fontSize: 18.0),
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    labelText: 'Priority',
+                    labelStyle: TextStyle(fontSize: 18.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    )),
+                validator: (input) => categorieModel.priority == null
+                    ? 'Please select a priority level'
+                    : null,
+                onChanged: (newValue) =>
+                    categorieModel.priority = newValue as String?,
+                value: categorieModel.priority == null
+                    ? _priority
+                    : categorieModel.priority,
+              ),
+            )
           ],
         ),
       ),

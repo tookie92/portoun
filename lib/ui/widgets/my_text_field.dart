@@ -32,13 +32,13 @@ class MyTextField extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(color: Colors.purple)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(color: Colors.purple)),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(color: Colors.purple)),
       ),
     );
