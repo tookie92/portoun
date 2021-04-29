@@ -237,13 +237,18 @@ class HomePage extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () async {},
+                      onPressed: ()  {
+                        print('ok');
+                      },
                       icon: Icon(
                         Icons.remove_red_eye,
                         color: Colors.white,
                       )),
                   IconButton(
-                      onPressed: () async {},
+                      onPressed: () {
+                        Navigator.push(
+                            context, BlocRouter().editCatPage(categorieModel));
+                      },
                       icon: Icon(
                         Icons.edit,
                         color: Colors.white,
