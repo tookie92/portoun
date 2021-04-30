@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:portoun/blocs/bloc_provider.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
@@ -110,6 +112,25 @@ class EditPage extends StatelessWidget {
                 validator: (value) => value!.isEmpty ? 'Pleaseee' : null,
                 initialValue: '${categorieModel.title}',
                 onSaved: (newValue) => categorieModel.title = newValue,
+              ),
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: DateTimePicker(
+                type: DateTimePickerType.date,
+                dateMask: 'd.MM.yyyy JJ',
+                initialValue: categorieModel.debut ??
+                    DateFormat.yMMMd('fr').format(DateTime.now()),
+                firstDate: DateTime.now(),
+                lastDate: DateTime(2100),
+                dateLabelText: 'Date',
+                onChanged: (val) => print(val),
+                validator: (val) =>
+                    val!.isEmpty ? 'Please a choose a Date' : null,
+                onSaved: (newValue) => categorieModel.debut = newValue,
               ),
             ),
             SizedBox(

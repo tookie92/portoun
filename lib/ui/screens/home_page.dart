@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
       body: Container(
         height: size.height,
         width: size.width,
-        decoration: BoxDecoration(color: Colors.black),
+        decoration: BoxDecoration(color: Colors.white),
         child: StreamBuilder<HomeState>(
           stream: bloc.stream,
           builder: (context, s) {
@@ -39,16 +40,21 @@ class HomePage extends StatelessWidget {
                 slivers: [
                   SliverAppBar(
                     expandedHeight: 90.0,
-                    floating: true,
-                    //pinned: true,
-                    backgroundColor: Colors.transparent,
+                    //floating: true,
+                    elevation: 0,
+                    pinned: true,
+                    backgroundColor: Colors.white,
                     forceElevated: true,
                     flexibleSpace: FlexibleSpaceBar(
                       title: MyText(
                         label: DateFormat.yMMMd('fr').format(DateTime.now()),
+                        color: Colors.black,
                       ),
                     ),
-                    leading: Icon(Icons.bento_outlined),
+                    leading: Icon(
+                      Icons.bento_outlined,
+                      color: Colors.black,
+                    ),
                     actions: [
                       IconButton(
                           onPressed: () async {
@@ -103,7 +109,7 @@ class HomePage extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.add,
-                            color: Colors.white,
+                            color: Colors.black,
                           ))
                     ],
                   ),
@@ -111,9 +117,9 @@ class HomePage extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                       return Container(
-                        height: size.height * 0.8,
+                        height: size.height,
                         width: size.width,
-                        decoration: BoxDecoration(color: Colors.black),
+                        decoration: BoxDecoration(color: Colors.white),
                         child: Column(
                           children: [
                             SizedBox(
@@ -124,7 +130,7 @@ class HomePage extends StatelessWidget {
                               fontSize: 20.0,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.0,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             SizedBox(
                               height: 10.0,
@@ -134,7 +140,7 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.normal,
                               fontSize: 14.0,
                               letterSpacing: 1.0,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             SizedBox(
                               height: 40.0,
@@ -148,13 +154,13 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   MyText(
                                     label: 'Projects',
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                                   MyText(
                                     label: 'More',
-                                    color: Colors.white.withOpacity(0.3),
+                                    color: Colors.black.withOpacity(0.3),
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -192,9 +198,10 @@ class HomePage extends StatelessWidget {
                                             ),
                                           ),
                                         )
-                                      : SizedBox(
-                                          height: 300.0,
+                                      : Container(
+                                          height: 280.0,
                                           width: size.width,
+                                          //color: Colors.blueAccent,
                                           child: ListView(
                                             physics: BouncingScrollPhysics(),
                                             scrollDirection: Axis.horizontal,
@@ -208,6 +215,31 @@ class HomePage extends StatelessWidget {
                                           ),
                                         );
                                 },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 29.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  MyText(
+                                    label: 'Pending',
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  MyText(
+                                    label: 'More',
+                                    color: Colors.black.withOpacity(0.3),
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -229,21 +261,42 @@ class HomePage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     // var mark = categorieModel.priority;
     Color? clr;
+    Image? img;
 
     switch (categorieModel.priority) {
-      case 'Done': // Enter this block if mark == 0
-        clr = Colors.blue;
+      case 'Done':
+        img = Image(
+          image: AssetImage('assets/images/done.png'),
+          height: 150.0,
+          width: 150.0,
+        );
+        clr = Color(0xffFFBF73);
         break;
 
-      case 'In Process': // Enter this block if mark == 1 or mark == 2 or mark == 3
-        clr = Colors.red;
+      case 'In Process':
+        img = Image(
+          image: AssetImage('assets/images/inprozess.png'),
+          height: 130.0,
+          width: 130.0,
+        );
+        clr = Color(0xff7DDFFB);
         break;
 
-      case 'In Process': // Enter this block if mark == 1 or mark == 2 or mark == 3
-        clr = Colors.deepOrangeAccent;
+      case 'Pending':
+        img = Image(
+          image: AssetImage('assets/images/pending.png'),
+          height: 130.0,
+          width: 130.0,
+        );
+        clr = Color(0xffF96A95);
         break;
       // etc.
       default:
+        img = Image(
+          image: AssetImage('assets/images/default.png'),
+          height: 130.0,
+          width: 130.0,
+        );
         clr = Colors.green;
     }
 
@@ -252,70 +305,91 @@ class HomePage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: 300.0,
-              width: 230.0,
+              height: 280.0,
+              width: 280.0,
               decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(05.0)),
+                color: clr,
+                borderRadius: BorderRadius.circular(30.0),
+              ),
             ),
-            Positioned(
-                top: size.height * 0.15,
-                left: size.height * 0.18,
-                child: Container(
-                  height: 200.0,
-                  width: 200.0,
-                  decoration: BoxDecoration(color: clr, shape: BoxShape.circle),
-                )),
-            Positioned(
-                top: size.height * 0.20,
-                left: size.height * 0.24,
-                child: Container(
-                  height: 120.0,
-                  width: 120.0,
-                  decoration: BoxDecoration(
-                      color: Colors.amber, shape: BoxShape.circle),
-                )),
+
             //design ende
             Positioned(
-              top: size.height * 0.02,
-              left: size.width * 0.03,
+              bottom: size.height * 0.14,
+              right: size.width * 0.35,
+              child: Container(child: FadeInLeft(child: img)),
+            ),
+
+            Positioned(
+              top: size.height * 0.13,
+              left: size.width * 0.06,
               child: MyText(
                 label: '${categorieModel.title}',
                 color: Colors.white,
-                fontSize: 20.0,
+                fontSize: 30.0,
+                fontWeight: FontWeight.w600,
               ),
             ),
 
             Positioned(
-              top: size.height * 0.05,
+              top: size.height * 0.02,
+              right: size.width * 0.06,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(20.0)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 8.0),
+                  child: MyText(
+                    label: categorieModel.priority == null
+                        ? 'nichts'
+                        : categorieModel.priority,
+                    color: clr,
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+            ),
+
+            Positioned(
+              top: size.height * 0.17,
+              left: size.width * 0.04,
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {
-                        print('ok');
-                      },
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: Colors.white,
-                      )),
+                    onPressed: () {
+                      print('ok');
+                    },
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.white,
+                    ),
+                    iconSize: 20.0,
+                  ),
                   IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context, BlocRouter().editCatPage(categorieModel));
-                      },
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      )),
+                    onPressed: () {
+                      Navigator.push(
+                          context, BlocRouter().editCatPage(categorieModel));
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
+                    iconSize: 20.0,
+                  ),
                   IconButton(
-                      onPressed: () async {
-                        await HomeState().deleteCategorie(categorieModel);
-                        // await _showMyUpdate(context, categorieModel);
-                      },
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                      )),
+                    onPressed: () async {
+                      await HomeState().deleteCategorie(categorieModel);
+                      // await _showMyUpdate(context, categorieModel);
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                    iconSize: 20.0,
+                  ),
                 ],
               ),
             )
