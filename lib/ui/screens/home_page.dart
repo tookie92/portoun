@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/models.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
-import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -38,23 +38,25 @@ class HomePage extends StatelessWidget {
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    expandedHeight: 70.0,
+                    expandedHeight: 90.0,
                     floating: true,
                     //pinned: true,
                     backgroundColor: Colors.transparent,
                     forceElevated: true,
                     flexibleSpace: FlexibleSpaceBar(
                       title: MyText(
-                        label: DateFormat.Hms('fr').format(DateTime.now()),
+                        label: DateFormat.yMMMd('fr').format(DateTime.now()),
                       ),
                     ),
+                    leading: Icon(Icons.bento_outlined),
                     actions: [
                       IconButton(
                           onPressed: () async {
                             //
                             await showDialog<void>(
                               context: context,
-                              barrierDismissible: true, // user must tap button!
+                              barrierDismissible:
+                                  false, // user must tap button!
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: Text('AlertDialog Title'),
@@ -77,17 +79,21 @@ class HomePage extends StatelessWidget {
                                     ),
                                   ),
                                   actions: <Widget>[
-                                    TextButton(
-                                      child: Text('Approve'),
+                                    MyTextButton(
+                                      label: 'Approve',
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
                                           print(
                                               '${truc.categorieModel!.title}');
-                                          await truc.addCategorie().then(
-                                              (value) =>
-                                                  Navigator.of(context).pop());
+                                          await truc.addCategorie();
                                         }
+                                      },
+                                    ),
+                                    MyTextButton(
+                                      label: 'Cancel',
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
                                       },
                                     ),
                                   ],
@@ -131,49 +137,78 @@ class HomePage extends StatelessWidget {
                               color: Colors.white,
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: 40.0,
                             ),
-                            StreamBuilder<QuerySnapshot>(
-                              stream: truc.collectionReference!.snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text('Something went wrong');
-                                }
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 29.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  MyText(
+                                    label: 'Projects',
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  MyText(
+                                    label: 'More',
+                                    color: Colors.white.withOpacity(0.3),
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: StreamBuilder<QuerySnapshot>(
+                                stream: truc.collectionReference!.snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Something went wrong');
+                                  }
 
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Text("Loading");
-                                }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text("Loading");
+                                  }
 
-                                return (snapshot.data!.docs.isEmpty)
-                                    ? Container(
-                                        height: size.height * 0.4,
-                                        width: size.width,
-                                        child: Center(
-                                          child: MyText(
-                                            label:
-                                                'no Categories press the green button',
-                                            color: Colors.white,
+                                  return (snapshot.data!.docs.isEmpty)
+                                      ? Container(
+                                          height: size.height * 0.4,
+                                          width: size.width,
+                                          child: Center(
+                                            child: MyText(
+                                              label:
+                                                  'no Categories press the green button',
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    : SizedBox(
-                                        height: 300.0,
-                                        width: size.width,
-                                        child: ListView(
-                                          physics: BouncingScrollPhysics(),
-                                          scrollDirection: Axis.horizontal,
-                                          children: snapshot.data!.docs
-                                              .map((DocumentSnapshot document) {
-                                            return Container(
-                                              child: showCategorie(
-                                                  document, context),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      );
-                              },
+                                        )
+                                      : SizedBox(
+                                          height: 300.0,
+                                          width: size.width,
+                                          child: ListView(
+                                            physics: BouncingScrollPhysics(),
+                                            scrollDirection: Axis.horizontal,
+                                            children: snapshot.data!.docs.map(
+                                                (DocumentSnapshot document) {
+                                              return Container(
+                                                child: showCategorie(
+                                                    document, context),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                },
+                              ),
                             ),
                           ],
                         ),
