@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/models.dart';
 
@@ -22,6 +24,8 @@ class BlocHome extends Bloc {
 
   BlocHome() {
     init();
+    //Intl.defaultLocale = 'fr_Fr';
+    //initializeDateFormatting('locale', filePath)
   }
 
   @override

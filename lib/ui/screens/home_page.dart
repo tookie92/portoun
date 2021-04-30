@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/models.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
                     forceElevated: true,
                     flexibleSpace: FlexibleSpaceBar(
                       title: MyText(
-                        label: 'Ilanga',
+                        label: DateFormat.Hms('fr').format(DateTime.now()),
                       ),
                     ),
                     actions: [
@@ -217,7 +218,7 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               height: 300.0,
-              width: 280.0,
+              width: 230.0,
               decoration: BoxDecoration(
                   color: Colors.amber,
                   borderRadius: BorderRadius.circular(05.0)),
