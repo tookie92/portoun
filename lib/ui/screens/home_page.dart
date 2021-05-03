@@ -44,7 +44,6 @@ class HomePage extends StatelessWidget {
                     elevation: 0,
                     pinned: true,
                     backgroundColor: Colors.white,
-                    forceElevated: true,
                     flexibleSpace: FlexibleSpaceBar(
                       centerTitle: true,
                       title: MyText(

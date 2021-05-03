@@ -88,7 +88,7 @@ class HomeState {
   //****** Ende  ********/
 
   //********Event Model *********/
-  Future<void> addEvent(String categorie) async {
+  Future<void> addEvent(String? categorie) async {
     collectionReferencecat =
         collectionReference!.doc(categorie).collection('events');
 
@@ -98,10 +98,9 @@ class HomeState {
         .catchError((error) => print("Failed to  mmd: $error"));
   }
 
-  Future<void> deleteEvent(
-      EventModel eventModel, CategorieModel categorieModel) async {
+  Future<void> deleteEvent(EventModel eventModel, String categorieModel) async {
     collectionReferencecat =
-        collectionReference!.doc(categorieModel.id).collection('events');
+        collectionReference!.doc(categorieModel).collection('events');
     await collectionReferencecat!
         .doc(eventModel.id)
         .delete()
@@ -109,10 +108,9 @@ class HomeState {
         .catchError((error) => print('$error'));
   }
 
-  Future<void> updateEvent(
-      EventModel eventModel, CategorieModel categorieModel) async {
+  Future<void> updateEvent(EventModel eventModel, String categorieModel) async {
     collectionReferencecat =
-        collectionReference!.doc(categorieModel.id).collection('events');
+        collectionReference!.doc(categorieModel).collection('events');
     await collectionReferencecat!
         .doc(eventModel.id)
         .update(eventModel.toJson())

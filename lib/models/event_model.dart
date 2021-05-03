@@ -15,7 +15,7 @@ class EventModel {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       'title': this.title,
-      'author': this.author,
+      'author': 'joseph ikinda',
     };
 
     if (id != null) {
