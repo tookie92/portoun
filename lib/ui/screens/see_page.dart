@@ -241,7 +241,7 @@ Future<void> _showMyDialog(
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('AlertDialog Title'),
+        title: Text('Add a Event'),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -259,7 +259,11 @@ Future<void> _showMyDialog(
         ),
         actions: <Widget>[
           MyTextButton(
-            label: 'Enter',
+            label: 'Cancel',
+            onPressed: () => Navigator.pop(context),
+          ),
+          MyTextButton(
+            label: 'Save',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -272,10 +276,6 @@ Future<void> _showMyDialog(
               }
               _formKey.currentState!.reset();
             },
-          ),
-          MyTextButton(
-            label: 'Cancel',
-            onPressed: () => Navigator.pop(context),
           ),
         ],
       );

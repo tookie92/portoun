@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie-sett/c_settings.dart';
+import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -65,7 +66,7 @@ class HomePage extends StatelessWidget {
                                   false, // user must tap button!
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('AlertDialog Title'),
+                                  title: Text('Add a categorie'),
                                   content: SingleChildScrollView(
                                     child: ListBody(
                                       children: <Widget>[
@@ -86,6 +87,12 @@ class HomePage extends StatelessWidget {
                                   ),
                                   actions: <Widget>[
                                     MyTextButton(
+                                      label: 'Cancel',
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    MyTextButton(
                                       label: 'Approve',
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
@@ -96,12 +103,6 @@ class HomePage extends StatelessWidget {
                                               (value) =>
                                                   Navigator.of(context).pop());
                                         }
-                                      },
-                                    ),
-                                    MyTextButton(
-                                      label: 'Cancel',
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
                                       },
                                     ),
                                   ],
@@ -194,8 +195,9 @@ class HomePage extends StatelessWidget {
                                             width: size.width,
                                             child: Center(
                                               child: MyText(
+                                                textAlign: TextAlign.center,
                                                 label:
-                                                    'no Categories press the green button',
+                                                    'no Categories press the + \n in the menu',
                                                 color: Colors.black,
                                               ),
                                             ),
