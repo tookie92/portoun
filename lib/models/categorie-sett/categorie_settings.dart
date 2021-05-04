@@ -222,93 +222,97 @@ showThat(DocumentSnapshot res, BuildContext context) {
                     key: _formKey,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: size.height * 0.05),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: MyTextField(
-                              initialValue: categorieModel.title,
-                              onSaved: (newValue) =>
-                                  categorieModel.title = newValue,
-                              labelText: 'Title',
-                              validator: (value) =>
-                                  value!.isEmpty ? 'Please' : null,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(height: size.height * 0.05),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: MyTextField(
+                                initialValue: categorieModel.title,
+                                onSaved: (newValue) =>
+                                    categorieModel.title = newValue,
+                                labelText: 'Title',
+                                validator: (value) =>
+                                    value!.isEmpty ? 'Please' : null,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: DateTimePicker(
-                              type: DateTimePickerType.date,
-                              dateMask: 'd.MM.yyyy',
-                              initialValue: categorieModel.debut ??
-                                  DateFormat.yMMMd('fr').format(DateTime.now()),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2100),
-                              dateLabelText: 'Date',
-                              onChanged: (val) => print(val),
-                              validator: (val) => val!.isEmpty
-                                  ? 'Please a choose a Date'
-                                  : null,
-                              onSaved: (newValue) =>
-                                  categorieModel.debut = newValue,
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  labelText: 'Priority',
-                                  labelStyle: TextStyle(fontSize: 18.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  )),
+                            SizedBox(
+                              height: 20.0,
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: DropdownButtonFormField(
-                              isDense: true,
-                              icon: Icon(Icons.arrow_drop_down_circle),
-                              iconSize: 22.0,
-                              iconEnabledColor: Theme.of(context).primaryColor,
-                              items: items.map((String priority) {
-                                return DropdownMenuItem(
-                                  value: priority,
-                                  child: Text(
-                                    priority,
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18.0),
-                                  ),
-                                );
-                              }).toList(),
-                              style: TextStyle(fontSize: 18.0),
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  labelText: 'Priority',
-                                  labelStyle: TextStyle(fontSize: 18.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  )),
-                              validator: (input) =>
-                                  categorieModel.priority == null
-                                      ? 'Please select a priority level'
-                                      : null,
-                              onChanged: (newValue) =>
-                                  categorieModel.priority = newValue as String?,
-                              value: categorieModel.priority == null
-                                  ? _priority
-                                  : categorieModel.priority,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: DateTimePicker(
+                                type: DateTimePickerType.date,
+                                dateMask: 'd.MM.yyyy',
+                                initialValue: categorieModel.debut ??
+                                    DateFormat.yMMMd('fr')
+                                        .format(DateTime.now()),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2100),
+                                dateLabelText: 'Date',
+                                onChanged: (val) => print(val),
+                                validator: (val) => val!.isEmpty
+                                    ? 'Please a choose a Date'
+                                    : null,
+                                onSaved: (newValue) =>
+                                    categorieModel.debut = newValue,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    labelText: 'Priority',
+                                    labelStyle: TextStyle(fontSize: 18.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    )),
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: DropdownButtonFormField(
+                                isDense: true,
+                                icon: Icon(Icons.arrow_drop_down_circle),
+                                iconSize: 22.0,
+                                iconEnabledColor:
+                                    Theme.of(context).primaryColor,
+                                items: items.map((String priority) {
+                                  return DropdownMenuItem(
+                                    value: priority,
+                                    child: Text(
+                                      priority,
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18.0),
+                                    ),
+                                  );
+                                }).toList(),
+                                style: TextStyle(fontSize: 18.0),
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    labelText: 'Priority',
+                                    labelStyle: TextStyle(fontSize: 18.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    )),
+                                validator: (input) =>
+                                    categorieModel.priority == null
+                                        ? 'Please select a priority level'
+                                        : null,
+                                onChanged: (newValue) => categorieModel
+                                    .priority = newValue as String?,
+                                value: categorieModel.priority == null
+                                    ? _priority
+                                    : categorieModel.priority,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

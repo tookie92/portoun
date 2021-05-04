@@ -17,6 +17,7 @@ class EditPage extends StatelessWidget {
     final mySize = MediaQuery.of(context).size;
     //print(categorieModel.id);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         height: mySize.height,
         width: mySize.width,
