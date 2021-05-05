@@ -160,7 +160,7 @@ class HomePage extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       MyText(
-                                        label: 'Projects',
+                                        label: 'Projects ',
                                         color: Colors.black,
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.w600,
@@ -291,8 +291,7 @@ class HomePage extends StatelessWidget {
                                           child: Center(
                                             child: MyText(
                                               textAlign: TextAlign.center,
-                                              label:
-                                                  'no Categories press the + \n in the menu',
+                                              label: 'no Categories fot today',
                                               color: Colors.black,
                                             ),
                                           ),
@@ -307,30 +306,9 @@ class HomePage extends StatelessWidget {
                                             scrollDirection: Axis.vertical,
                                             children: snapshot.data!.docs.map(
                                                 (DocumentSnapshot document) {
-                                              CategorieModel categorieModel =
-                                                  CategorieModel.fromSnapShot(
-                                                      document);
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 18.0,
-                                                        vertical: 10.0),
-                                                child: Container(
-                                                  height: 100.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.blue,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      30.0,
-                                                    ),
-                                                  ),
-                                                  child: ListTile(
-                                                    title: MyText(
-                                                        label:
-                                                            '${categorieModel.title}'),
-                                                  ),
-                                                ),
-                                              );
+                                              return Container(
+                                                  child: showCategorieToday(
+                                                      document, context));
                                             }).toList(),
                                           ),
                                         );

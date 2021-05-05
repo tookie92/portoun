@@ -25,8 +25,8 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
     case 'Done':
       img = Image(
         image: AssetImage('assets/images/done.png'),
-        height: 150.0,
-        width: 150.0,
+        height: 120.0,
+        width: 120.0,
       );
       clr = Color(0xffFFBF73);
       break;
@@ -34,8 +34,8 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
     case 'In Process':
       img = Image(
         image: AssetImage('assets/images/inprozess.png'),
-        height: 130.0,
-        width: 130.0,
+        height: 120.0,
+        width: 120.0,
       );
       clr = Color(0xff7DDFFB);
       break;
@@ -43,8 +43,8 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
     case 'Pending':
       img = Image(
         image: AssetImage('assets/images/pending.png'),
-        height: 130.0,
-        width: 130.0,
+        height: 120.0,
+        width: 120.0,
       );
       clr = Color(0xffF96A95);
       break;
@@ -52,47 +52,44 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
     default:
       img = Image(
         image: AssetImage('assets/images/default.png'),
-        height: 130.0,
-        width: 130.0,
+        height: 120.0,
+        width: 120.0,
       );
       clr = Colors.green;
   }
 
   var item = Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-      child: Container(
-        height: 250.0,
-        width: 200.0,
-        //color: Colors.blueAccent,
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                height: 230.0,
-                width: 280.0,
-                decoration: BoxDecoration(
-                    color: clr,
-                    borderRadius: BorderRadius.circular(30.0),
-                    boxShadow: [
-                      BoxShadow(
-                          color: clr,
-                          offset: Offset(5.0, 10.0),
-                          blurRadius: 2.0)
-                    ]),
+    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+    child: Container(
+      height: size.height * 0.3,
+      width: size.width * 0.3,
+      decoration: BoxDecoration(
+        color: clr,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: clr,
+            offset: Offset(5.0, 5.0),
+            blurRadius: 10.0,
+          ),
+        ],
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned(
+            top: size.width * 0.0,
+            child: Container(
+              child: Bounce(
+                from: 10.0,
+                child: img,
               ),
             ),
-
-            //design ende
-            Positioned(
-              bottom: size.height * 0.13,
-              right: size.width * 0.37,
-              child: Container(child: Bounce(from: 10, child: img)),
-            ),
-
-            Positioned(
-              top: size.height * 0.14,
-              left: size.width * 0.06,
+          ),
+          Positioned(
+            top: size.height * 0.12,
+            left: size.width * 0.07,
+            child: Container(
               child: MyText(
                 label: '${categorieModel.title}',
                 color: Colors.white,
@@ -100,72 +97,72 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
                 fontWeight: FontWeight.w600,
               ),
             ),
-
-            Positioned(
-              top: size.height * 0.02,
-              right: size.width * 0.06,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 8.0),
-                  child: MyText(
-                    label: categorieModel.priority == null
-                        ? 'nichts'
-                        : categorieModel.priority,
-                    color: clr,
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.w800,
-                  ),
+          ),
+          Positioned(
+            top: size.height * 0.02,
+            right: size.width * 0.06,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                child: MyText(
+                  label: categorieModel.priority == null
+                      ? 'nichts'
+                      : categorieModel.priority,
+                  color: clr,
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
-
-            Positioned(
-              top: size.height * 0.18,
-              left: size.width * 0.04,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                          context, BlocRouter().seecatPage(categorieModel));
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.white,
-                    ),
-                    iconSize: 20.0,
+          ),
+          Positioned(
+            top: size.height * 0.16,
+            left: size.width * 0.04,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                        context, BlocRouter().seecatPage(categorieModel));
+                  },
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                    color: Colors.white,
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      await showMyCategorie(context, categorieModel);
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                    ),
-                    iconSize: 20.0,
+                  iconSize: 20.0,
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await showMyCategorie(context, categorieModel);
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.white,
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      await HomeState().deleteCategorie(categorieModel);
-                      // await _showMyUpdate(context, categorieModel);
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                    ),
-                    iconSize: 20.0,
+                  iconSize: 20.0,
+                ),
+                IconButton(
+                  onPressed: () async {
+                    await HomeState().deleteCategorie(categorieModel);
+                    // await _showMyUpdate(context, categorieModel);
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white,
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ));
+                  iconSize: 20.0,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 
   return item;
 }
@@ -191,7 +188,7 @@ Future showMyCategorie(
           Animation secondaryAnimation) {
         return Center(
           child: Container(
-            width: MediaQuery.of(context).size.width - 20,
+            width: MediaQuery.of(context).size.width - 10,
             height: MediaQuery.of(context).size.height - 80,
             padding: EdgeInsets.all(20),
             color: Colors.white,
