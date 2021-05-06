@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/helpers/responsive_layers.dart';
 import 'package:portoun/models/categorie-sett/c_settings.dart';
-import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -124,13 +123,13 @@ class HomePage extends StatelessWidget {
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
                           return Container(
-                            height: size.height * 0.53,
+                            height: size.height * 0.52,
                             width: size.width,
-                            decoration: BoxDecoration(color: Colors.white),
+                            //decoration: BoxDecoration(color: Colors.green),
                             child: Column(
                               children: [
                                 SizedBox(
-                                  height: size.height * 0.02,
+                                  height: size.height * 0.01,
                                 ),
                                 MyText(
                                   label: 'Dashboard',

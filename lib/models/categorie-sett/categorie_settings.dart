@@ -256,7 +256,39 @@ Future showMyCategorie(
                                     decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
-                                        labelText: 'Priority',
+                                        labelText: 'debut',
+                                        labelStyle: TextStyle(fontSize: 18.0),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        )),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: DateTimePicker(
+                                    type: DateTimePickerType.date,
+                                    dateMask: 'd.MM.yyyy',
+                                    initialValue: categorieModel.fin ??
+                                        DateFormat.yMMMd('fr')
+                                            .format(DateTime.now()),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2100),
+                                    dateLabelText: 'Date',
+                                    onChanged: (val) => print(val),
+                                    validator: (val) => val!.isEmpty
+                                        ? 'Please a choose a Date'
+                                        : null,
+                                    onSaved: (newValue) =>
+                                        categorieModel.fin = newValue,
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        labelText: 'fin',
                                         labelStyle: TextStyle(fontSize: 18.0),
                                         border: OutlineInputBorder(
                                           borderRadius:

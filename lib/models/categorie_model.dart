@@ -5,15 +5,17 @@ class CategorieModel {
   String? title;
   String? priority;
   String? debut;
+  String? fin;
   String? author;
 
-  CategorieModel(this.title, this.author);
+  CategorieModel(this.title, this.priority, this.fin, this.debut, this.author);
 
   CategorieModel.fromSnapShot(DocumentSnapshot doc)
       : id = doc.id,
         title = doc.data()!['title'],
         priority = doc.data()!['priority'],
         debut = doc.data()!['debut'],
+        fin = doc.data()!['fin'],
         author = doc.data()!['author'];
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class CategorieModel {
       'title': this.title,
       'priority': this.priority,
       'debut': this.debut,
+      'fin': this.fin,
       'author': 'joseph ikinda'
     };
 

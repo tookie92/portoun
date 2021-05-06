@@ -46,7 +46,7 @@ class HomeState {
   CollectionReference? collectionReference =
       FirebaseFirestore.instance.collection('categories');
 
-  CategorieModel? categorieModel = CategorieModel('', '');
+  CategorieModel? categorieModel = CategorieModel('', '', '', '', '');
   EventModel? eventModel = EventModel('', '');
 
   //******* Ende *******/
