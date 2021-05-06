@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
+import 'package:select_form_field/select_form_field.dart';
+
 
 //****************** */
 //****************** */
@@ -176,6 +178,25 @@ Future showMyCategorie(
     'Done',
     'In Process',
   ];
+  final List<Map<String, dynamic>> _items = [
+  {
+    'value': 'pendingValue',
+    'label': 'Pending',
+    'icon': Icon(Icons.stop),
+  },
+  {
+    'value': 'doneValue',
+    'label': 'Done',
+    'icon': Icon(Icons.fiber_manual_record),
+    'textStyle': TextStyle(color: Colors.red),
+  },
+  {
+    'value': 'processValue',
+    'label': 'In Process',
+    'enable': false,
+    'icon': Icon(Icons.grade),
+  },
+];
   //final size = MediaQuery.of(context).size;
   final _formKey = GlobalKey<FormState>();
   return showGeneralDialog(
@@ -267,6 +288,18 @@ Future showMyCategorie(
                                 SizedBox(
                                   height: 20.0,
                                 ),
+                                SelectFormField(
+                                  type: SelectFormFieldType.dropdown, // or can be dialog
+                                  initialValue: 'Done',
+                                  icon: Icon(Icons.format_shapes),
+                                  labelText: 'Shape',
+                                  items: _items,
+                                  onChanged: (val) => print(val),
+                                  onSaved: (val) => print(val),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0),
@@ -299,47 +332,7 @@ Future showMyCategorie(
                                 SizedBox(
                                   height: 20.0,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0),
-                                  child: DropdownButtonFormField(
-                                    isDense: true,
-                                    icon: Icon(Icons.arrow_drop_down_circle),
-                                    iconSize: 22.0,
-                                    iconEnabledColor:
-                                        Theme.of(context).primaryColor,
-                                    items: items.map((String priority) {
-                                      return DropdownMenuItem(
-                                        value: priority,
-                                        child: Text(
-                                          priority,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18.0),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    style: TextStyle(fontSize: 18.0),
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        labelText: 'Priority',
-                                        labelStyle: TextStyle(fontSize: 18.0),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        )),
-                                    validator: (input) =>
-                                        categorieModel.priority == null
-                                            ? 'Please select a priority level'
-                                            : null,
-                                    onChanged: (newValue) => categorieModel
-                                        .priority = newValue as String?,
-                                    value: categorieModel.priority == null
-                                        ? _priority
-                                        : categorieModel.priority,
-                                  ),
-                                ),
+                               
                                 MyTextButton(
                                   label: 'Edit',
                                   backgroundColor: Colors.amber,
