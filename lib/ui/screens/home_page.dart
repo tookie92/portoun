@@ -195,7 +195,7 @@ class HomePage extends StatelessWidget {
 
                                       return (snapshot.data!.docs.isEmpty)
                                           ? Container(
-                                              height: size.height * 0.4,
+                                              height: size.height * 0.3,
                                               width: size.width,
                                               child: Center(
                                                 child: MyText(
