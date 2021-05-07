@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
-import 'package:select_form_field/select_form_field.dart';
-
 
 //****************** */
 //****************** */
@@ -19,6 +17,7 @@ import 'package:select_form_field/select_form_field.dart';
 showCategorie(DocumentSnapshot res, BuildContext context) {
   CategorieModel categorieModel = CategorieModel.fromSnapShot(res);
   final size = MediaQuery.of(context).size;
+  final String? prio;
   // var mark = categorieModel.priority;
   Color? clr;
   Image? img;
@@ -31,6 +30,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
         width: 120.0,
       );
       clr = Color(0xffFFBF73);
+      prio = 'Done';
       break;
 
     case 'In Process':
@@ -40,6 +40,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
         width: 120.0,
       );
       clr = Color(0xff7DDFFB);
+      prio = 'In Progress';
       break;
 
     case 'Pending':
@@ -49,6 +50,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
         width: 120.0,
       );
       clr = Color(0xffF96A95);
+      prio = 'Pending';
       break;
     // etc.
     default:
@@ -57,6 +59,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
         height: 120.0,
         width: 120.0,
       );
+      prio = 'nichts';
       clr = Colors.green;
   }
 
@@ -111,9 +114,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
                 child: MyText(
-                  label: categorieModel.priority == null
-                      ? 'nichts'
-                      : categorieModel.priority,
+                  label: prio,
                   color: clr,
                   fontSize: 11.0,
                   fontWeight: FontWeight.w800,
@@ -172,32 +173,9 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
 Future showMyCategorie(
     BuildContext context, CategorieModel categorieModel) async {
   print(categorieModel.id);
-  String? _priority;
-  var items = [
-    'Pending',
-    'Done',
-    'In Process',
-  ];
-  final List<Map<String, dynamic>> _items = [
-  {
-    'value': 'pendingValue',
-    'label': 'Pending',
-    'icon': Icon(Icons.stop),
-  },
-  {
-    'value': 'doneValue',
-    'label': 'Done',
-    'icon': Icon(Icons.fiber_manual_record),
-    'textStyle': TextStyle(color: Colors.red),
-  },
-  {
-    'value': 'processValue',
-    'label': 'In Process',
-    'enable': false,
-    'icon': Icon(Icons.grade),
-  },
-];
-  //final size = MediaQuery.of(context).size;
+  //String? _priority;
+
+  final size = MediaQuery.of(context).size;
   final _formKey = GlobalKey<FormState>();
   return showGeneralDialog(
       context: context,
@@ -207,153 +185,144 @@ Future showMyCategorie(
       transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (BuildContext buildContext, Animation animation,
           Animation secondaryAnimation) {
-        return Center(
-          child: Container(
-            width: MediaQuery.of(context).size.width - 10,
-            height: MediaQuery.of(context).size.height - 80,
-            padding: EdgeInsets.all(20),
-            color: Colors.white,
-            child: Column(
-              children: [
-                Material(
-                    color: Colors.white,
-                    child: Container(
-                      height: 500.0,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      // color: Colors.blue,
-                      child: ListView(
+        return Card(
+          child: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width - 10,
+              height: MediaQuery.of(context).size.height - 60,
+              padding: EdgeInsets.all(40.0),
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    height: size.height * 0.7,
+                    width: size.width,
+                    //color: Colors.blue,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               IconButton(
-                                onPressed: () async {
-                                  Navigator.pop(context);
-                                },
+                                onPressed: () => Navigator.pop(context),
                                 icon: Icon(Icons.arrow_back_ios),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 40.0,
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
-                                  child: MyTextField(
-                                    validator: (value) =>
-                                        value!.isEmpty ? 'Please' : null,
-                                    labelText: 'Categorie',
-                                    onSaved: (newValue) =>
-                                        categorieModel.title = newValue,
-                                    initialValue: categorieModel.title ?? '',
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
-                                  child: DateTimePicker(
-                                    type: DateTimePickerType.date,
-                                    dateMask: 'd.MM.yyyy',
-                                    initialValue: categorieModel.debut ??
-                                        DateFormat.yMMMd('fr')
-                                            .format(DateTime.now()),
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime(2100),
-                                    dateLabelText: 'Date',
-                                    onChanged: (val) => print(val),
-                                    validator: (val) => val!.isEmpty
-                                        ? 'Please a choose a Date'
-                                        : null,
-                                    onSaved: (newValue) =>
-                                        categorieModel.debut = newValue,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        labelText: 'debut',
-                                        labelStyle: TextStyle(fontSize: 18.0),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        )),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                SelectFormField(
-                                  type: SelectFormFieldType.dropdown, // or can be dialog
-                                  initialValue: 'Done',
-                                  icon: Icon(Icons.format_shapes),
-                                  labelText: 'Shape',
-                                  items: _items,
-                                  onChanged: (val) => print(val),
-                                  onSaved: (val) => print(val),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
-                                  child: DateTimePicker(
-                                    type: DateTimePickerType.date,
-                                    dateMask: 'd.MM.yyyy',
-                                    initialValue: categorieModel.fin ??
-                                        DateFormat.yMMMd('fr')
-                                            .format(DateTime.now()),
-                                    firstDate: DateTime.now(),
-                                    lastDate: DateTime(2100),
-                                    dateLabelText: 'Date',
-                                    onChanged: (val) => print(val),
-                                    validator: (val) => val!.isEmpty
-                                        ? 'Please a choose a Date'
-                                        : null,
-                                    onSaved: (newValue) =>
-                                        categorieModel.fin = newValue,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        labelText: 'fin',
-                                        labelStyle: TextStyle(fontSize: 18.0),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        )),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                               
-                                MyTextButton(
-                                  label: 'Edit',
-                                  backgroundColor: Colors.amber,
-                                  colorText: Colors.white,
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                      await HomeState()
-                                          .updateCategorie(categorieModel)
-                                          .then((value) =>
-                                              Navigator.pop(context));
-                                    }
-                                  },
-                                )
-                              ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: MyTextField(
+                              validator: (value) =>
+                                  value!.isEmpty ? 'Please' : null,
+                              labelText: 'title',
+                              initialValue: categorieModel.title ?? '',
+                              onSaved: (newValue) =>
+                                  categorieModel.title = newValue,
                             ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: DateTimePicker(
+                              type: DateTimePickerType.date,
+                              dateMask: 'd.MM.yyyy',
+                              initialValue: categorieModel.debut ??
+                                  DateFormat.yMMMd('fr').format(DateTime.now()),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
+                              dateLabelText: 'Date',
+                              onChanged: (val) => print(val),
+                              validator: (val) => val!.isEmpty
+                                  ? 'Please a choose a Date'
+                                  : null,
+                              onSaved: (newValue) =>
+                                  categorieModel.debut = newValue,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: 'Debut',
+                                labelStyle: TextStyle(fontSize: 18.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 25.0),
+                            child: DateTimePicker(
+                              type: DateTimePickerType.date,
+                              dateMask: 'd.MM.yyyy',
+                              initialValue: categorieModel.debut == null
+                                  ? DateFormat.yMMMd('fr')
+                                      .format(DateTime.now())
+                                  : categorieModel.debut,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
+                              dateLabelText: 'Date',
+                              onChanged: (val) => print(val),
+                              validator: (val) => val!.isEmpty
+                                  ? 'Please a choose a Date'
+                                  : null,
+                              onSaved: (newValue) =>
+                                  categorieModel.fin = newValue,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: 'Fin',
+                                labelStyle: TextStyle(fontSize: 18.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              labelText: '${categorieModel.priority}',
+                              labelStyle: TextStyle(fontSize: 18.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            items: <String>[
+                              'Done',
+                              'Pending',
+                              'In Process',
+                            ].map((String value) {
+                              categorieModel.priority = value;
+                              return new DropdownMenuItem<String>(
+                                value: value,
+                                child: new Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) =>
+                                categorieModel.priority = value,
+                            onSaved: (newValue) =>
+                                categorieModel.priority = newValue,
+                          ),
+                          MyTextButton(
+                            label: 'ok',
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                await HomeState()
+                                    .updateCategorie(categorieModel)
+                                    .then((value) => Navigator.pop(context));
+                              }
+                            },
                           ),
                         ],
                       ),
-                    )),
-              ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
