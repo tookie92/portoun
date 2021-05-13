@@ -55,7 +55,8 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       leading: IconButton(
-                          onPressed: () {},
+                          onPressed: () => Navigator.push(
+                              context, BlocRouter().calendrierPage()),
                           icon: Icon(
                             Icons.calendar_today,
                             color: Colors.black,
