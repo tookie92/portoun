@@ -54,10 +54,12 @@ class HomePage extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      leading: Icon(
-                        Icons.bento_outlined,
-                        color: Colors.black,
-                      ),
+                      leading: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.calendar_today,
+                            color: Colors.black,
+                          )),
                       actions: [
                         IconButton(
                             onPressed: () async {
