@@ -14,15 +14,24 @@ class BlocCalendar extends Bloc {
     sink.add(resultat);
   }
 
-  Future getCategorie() async {
+  Future<QuerySnapshot>? getCategorie() async {
     QuerySnapshot qn =
         await FirebaseFirestore.instance.collection('categories').get();
 
-    return qn.docs;
+    qn.docs;
+
+    return qn;
+  }
+
+  Future gloire() async {
+    getCategorie()!.then((results) {
+      sink.add(CalendarState(querySnapshot: results));
+    });
   }
 
   BlocCalendar() {
     init();
+    gloire();
   }
 
   @override
@@ -32,7 +41,9 @@ class BlocCalendar extends Bloc {
 }
 
 class CalendarState {
+  QuerySnapshot? querySnapshot;
+  dynamic data;
   final bool isActive;
 
-  CalendarState({this.isActive = false});
+  CalendarState({this.isActive = false, this.querySnapshot, this.data});
 }

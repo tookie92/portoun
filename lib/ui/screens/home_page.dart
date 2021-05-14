@@ -12,7 +12,6 @@ class HomePage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final bloc = BlocProvider.of<BlocHome>(context);
     final _formKey = GlobalKey<FormState>();
-    print(DateTime.now());
 
     return ResponsiveLayout(
       mobile: Scaffold(
