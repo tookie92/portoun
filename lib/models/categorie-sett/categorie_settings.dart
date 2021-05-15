@@ -224,10 +224,9 @@ Future showMyCategorie(
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: DateTimePicker(
-                              type: DateTimePickerType.date,
-                              dateMask: 'd.MM.yyyy',
-                              initialValue: categorieModel.debut ??
-                                  DateFormat.yMMMd('fr').format(DateTime.now()),
+                              type: DateTimePickerType.dateTimeSeparate,
+                              dateMask: 'd.MM.yyyy hh:mm',
+                              initialValue: '${categorieModel.debut}',
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
                               dateLabelText: 'Date',
@@ -251,12 +250,9 @@ Future showMyCategorie(
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 25.0),
                             child: DateTimePicker(
-                              type: DateTimePickerType.date,
-                              dateMask: 'd.MM.yyyy',
-                              initialValue: categorieModel.debut == null
-                                  ? DateFormat.yMMMd('fr')
-                                      .format(DateTime.now())
-                                  : categorieModel.debut,
+                              type: DateTimePickerType.dateTimeSeparate,
+                              dateMask: 'd.MM.yyyy hh:mm',
+                              initialValue: '${categorieModel.fin}',
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
                               dateLabelText: 'Date',
@@ -292,7 +288,7 @@ Future showMyCategorie(
                               'Pending',
                               'In Process',
                             ].map((String value) {
-                              categorieModel.priority = value;
+                              //categorieModel.priority = value;
                               return new DropdownMenuItem<String>(
                                 value: value,
                                 child: new Text(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:portoun/blocs/blocs.dart';
 
 class BlocCalendar extends Bloc {
@@ -43,6 +44,7 @@ class BlocCalendar extends Bloc {
 class CalendarState {
   QuerySnapshot? querySnapshot;
   dynamic data;
+  List<Color>? colorCollection;
   final bool isActive;
 
   CalendarState({this.isActive = false, this.querySnapshot, this.data});
