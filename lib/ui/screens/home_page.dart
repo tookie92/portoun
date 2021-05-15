@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final bloc = BlocProvider.of<BlocHome>(context);
     final _formKey = GlobalKey<FormState>();
+    print('${DateFormat('yyyy-MM-dd hh:mm').format(DateTime.now())}');
 
     return Scaffold(
       body: Container(
@@ -123,7 +124,7 @@ class HomePage extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         return Container(
-                          height: size.height * 0.65,
+                          height: size.height * 0.53,
                           width: size.width,
                           //decoration: BoxDecoration(color: Colors.green),
                           child: Column(
@@ -206,7 +207,7 @@ class HomePage extends StatelessWidget {
                                             ),
                                           )
                                         : Container(
-                                            height: size.height * 0.4,
+                                            height: size.height * 0.3,
                                             width: size.width,
                                             //color: Colors.blueAccent,
                                             child: PageView(
@@ -266,7 +267,8 @@ class HomePage extends StatelessWidget {
                               stream: truc.collectionReference!
                                   .where(
                                     'debut',
-                                    isEqualTo: DateTime.now().toString(),
+                                    isEqualTo: DateFormat('yyyy-MM-dd hh:mm')
+                                        .format(DateTime.now()),
                                   )
                                   .snapshots(),
                               builder: (BuildContext context,
