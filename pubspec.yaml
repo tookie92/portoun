@@ -31,7 +31,6 @@ dependencies:
   google_fonts: ^2.0.0
   intl: ^0.17.0
   flutter_slidable:
-  flutter_neat_and_clean_calendar: ^0.2.2+10
   syncfusion_flutter_calendar: ^19.1.63
 
 dev_dependencies:

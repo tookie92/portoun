@@ -14,7 +14,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -139,13 +139,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_neat_and_clean_calendar:
-    dependency: "direct main"
-    description:
-      name: flutter_neat_and_clean_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2+10"
   flutter_slidable:
     dependency: "direct main"
     description:

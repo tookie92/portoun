@@ -176,6 +176,7 @@ Future showMyCategorie(
 
   final size = MediaQuery.of(context).size;
   final _formKey = GlobalKey<FormState>();
+
   return showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -276,7 +277,7 @@ Future showMyCategorie(
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              labelText: '${categorieModel.priority}',
+                              labelText: 'priority',
                               labelStyle: TextStyle(fontSize: 18.0),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -298,8 +299,9 @@ Future showMyCategorie(
                             }).toList(),
                             onChanged: (value) =>
                                 categorieModel.priority = value,
-                            onSaved: (newValue) =>
-                                categorieModel.priority = newValue,
+                            value: categorieModel.priority,
+                            //onSaved: (newValue) =>
+                            //  categorieModel.priority = newValue,
                           ),
                           MyTextButton(
                             label: 'ok',
