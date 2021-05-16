@@ -52,8 +52,10 @@ class MyCalendar extends StatelessWidget {
                   Meeting(
                     eventName: '${categorieModel.title}',
                     isAllDay: false,
-                    from: DateTime.parse('${categorieModel.debut}'),
-                    to: DateTime.parse('${categorieModel.fin}'),
+                    from: DateFormat('yyyy-MM-dd HH:mm')
+                        .parse('${categorieModel.debut}'),
+                    to: DateFormat('yyyy-MM-dd HH:mm')
+                        .parse('${categorieModel.fin}'),
                     background: Colors.amber,
                     resourceId: '0001',
                   ),
@@ -65,33 +67,21 @@ class MyCalendar extends StatelessWidget {
                 allowedViews: [
                   CalendarView.timelineDay,
                   CalendarView.timelineWeek,
-                  CalendarView.timelineWorkWeek,
                   CalendarView.timelineMonth,
                   CalendarView.month
                 ],
-                appointmentBuilder: (context, details) {
-                  final Meeting meeting = details.appointments.first;
+                /* monthCellBuilder: (context, details) {
+                  var e = details.date;
                   return Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: meeting.background,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText(
-                          label: '${meeting.eventName}',
-                          color: Colors.white,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black.withOpacity(0.2),
+                          width: 0.0,
                         ),
-                        MyText(
-                          label: "${meeting.from}",
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                      child: Center(child: Text('${e.day}')));
+                },*/
+
                 initialDisplayDate: DateTime.now(),
                 dataSource: _getCalendarDataSource(collection),
                 monthViewSettings:
