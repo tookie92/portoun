@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
@@ -45,10 +43,10 @@ class MyCalendar extends StatelessWidget {
               );
             } else {
               var iterable = truc.querySnapshot!.docs.toList();
-              List<Meeting> collection = [];
+              List<Meeting>? collection = [];
 
               for (var element in iterable) {
-                CategorieModel categorieModel =
+                CategorieModel? categorieModel =
                     CategorieModel.fromSnapShot(element);
                 collection.add(
                   Meeting(
@@ -63,9 +61,8 @@ class MyCalendar extends StatelessWidget {
               }
 
               return SfCalendar(
-                view: CalendarView.schedule,
+                view: CalendarView.month,
                 allowedViews: [
-                  CalendarView.schedule,
                   CalendarView.timelineDay,
                   CalendarView.timelineWeek,
                   CalendarView.timelineWorkWeek,
@@ -74,10 +71,13 @@ class MyCalendar extends StatelessWidget {
                 ],
                 initialDisplayDate: DateTime.now(),
                 dataSource: _getCalendarDataSource(collection),
-                monthViewSettings: MonthViewSettings(showAgenda: true),
+                monthViewSettings:
+                    MonthViewSettings(showAgenda: true, agendaItemHeight: 70),
+                allowViewNavigation: true,
+                appointmentTimeTextFormat: 'hh:mm',
                 appointmentTextStyle: GoogleFonts.montserrat(
                     color: Colors.white,
-                    fontSize: 20.0,
+                    fontSize: 24.0,
                     fontWeight: FontWeight.w700),
               );
             }
@@ -89,7 +89,7 @@ class MyCalendar extends StatelessWidget {
 }
 
 MeetingDataSource _getCalendarDataSource([List<Meeting>? collection]) {
-  List<Meeting> meetings = collection ?? <Meeting>[];
+  List<Meeting>? meetings = collection ?? <Meeting>[];
   List<CalendarResource> resourceColl = <CalendarResource>[];
   resourceColl.add(CalendarResource(
     displayName: 'John',
@@ -100,7 +100,8 @@ MeetingDataSource _getCalendarDataSource([List<Meeting>? collection]) {
 }
 
 class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<Meeting> source, List<CalendarResource> resourceColl) {
+  MeetingDataSource(
+      List<Meeting>? source, List<CalendarResource>? resourceColl) {
     appointments = source;
     resources = resourceColl;
   }

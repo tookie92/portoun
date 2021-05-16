@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
@@ -225,7 +224,7 @@ Future showMyCategorie(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
                             child: DateTimePicker(
                               type: DateTimePickerType.dateTimeSeparate,
-                              dateMask: 'd.MM.yyyy hh:mm',
+                              dateMask: 'd.MM.yyyy',
                               initialValue: '${categorieModel.debut}',
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
@@ -251,7 +250,7 @@ Future showMyCategorie(
                             padding: const EdgeInsets.symmetric(vertical: 25.0),
                             child: DateTimePicker(
                               type: DateTimePickerType.dateTimeSeparate,
-                              dateMask: 'd.MM.yyyy hh:mm',
+                              dateMask: 'd.MM.yyyy',
                               initialValue: '${categorieModel.fin}',
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),

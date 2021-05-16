@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
-import 'package:portoun/helpers/responsive_layers.dart';
 import 'package:portoun/models/categorie-sett/c_settings.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
 
@@ -12,7 +11,6 @@ class HomePage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final bloc = BlocProvider.of<BlocHome>(context);
     final _formKey = GlobalKey<FormState>();
-    print('${DateFormat('yyyy-MM-dd hh:mm').format(DateTime.now())}');
 
     return Scaffold(
       body: Container(
@@ -249,7 +247,7 @@ class HomePage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   MyText(
-                                    label: 'Today',
+                                    label: 'Pending',
                                     color: Colors.black,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w600,
@@ -265,10 +263,10 @@ class HomePage extends StatelessWidget {
                             ),
                             StreamBuilder<QuerySnapshot>(
                               stream: truc.collectionReference!
+                                  .limit(3)
                                   .where(
-                                    'debut',
-                                    isEqualTo: DateFormat('yyyy-MM-dd hh:mm')
-                                        .format(DateTime.now()),
+                                    'priority',
+                                    isEqualTo: 'Pending',
                                   )
                                   .snapshots(),
                               builder: (BuildContext context,
