@@ -69,6 +69,29 @@ class MyCalendar extends StatelessWidget {
                   CalendarView.timelineMonth,
                   CalendarView.month
                 ],
+                appointmentBuilder: (context, details) {
+                  final Meeting meeting = details.appointments.first;
+                  return Container(
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: meeting.background,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MyText(
+                          label: '${meeting.eventName}',
+                          color: Colors.white,
+                        ),
+                        MyText(
+                          label: "${meeting.from}",
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  );
+                },
                 initialDisplayDate: DateTime.now(),
                 dataSource: _getCalendarDataSource(collection),
                 monthViewSettings:
