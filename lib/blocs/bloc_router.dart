@@ -8,8 +8,6 @@ import 'package:portoun/ui/screens/see_page.dart';
 class BlocRouter {
   MaterialPageRoute homePage() => MaterialPageRoute(builder: (ctx) => home());
 
-  MaterialPageRoute editCatPage(CategorieModel cat) =>
-      MaterialPageRoute(builder: (context) => editCat(cat));
   MaterialPageRoute seecatPage(CategorieModel cat) =>
       MaterialPageRoute(builder: (context) => seecat(cat));
   MaterialPageRoute calendrierPage() =>
@@ -19,8 +17,7 @@ class BlocRouter {
       BlocProvider<BlocCalendar>(bloc: BlocCalendar(), child: MyCalendar());
   BlocProvider seecat(CategorieModel categorieModel) =>
       BlocProvider<BlocHome>(bloc: BlocHome(), child: SeePage(categorieModel));
-  BlocProvider editCat(CategorieModel categorieModel) =>
-      BlocProvider<BlocHome>(bloc: BlocHome(), child: EditPage(categorieModel));
+
   BlocProvider home() =>
       BlocProvider<BlocHome>(bloc: BlocHome(), child: HomePage());
   BlocProvider accueil() =>

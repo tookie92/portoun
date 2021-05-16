@@ -173,6 +173,11 @@ Future showMyCategorie(
     BuildContext context, CategorieModel categorieModel) async {
   print(categorieModel.id);
   //String? _priority;
+  final List<String> _items = [
+    'Done',
+    'Pending',
+    'In Process',
+  ];
 
   final size = MediaQuery.of(context).size;
   final _formKey = GlobalKey<FormState>();
@@ -283,11 +288,7 @@ Future showMyCategorie(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
-                            items: <String>[
-                              'Done',
-                              'Pending',
-                              'In Process',
-                            ].map((String value) {
+                            items: _items.map((String value) {
                               //categorieModel.priority = value;
                               return new DropdownMenuItem<String>(
                                 value: value,

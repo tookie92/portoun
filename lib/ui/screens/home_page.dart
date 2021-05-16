@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
@@ -74,15 +75,144 @@ class HomePage extends StatelessWidget {
                                       children: <Widget>[
                                         Form(
                                             key: _formKey,
-                                            child: MyTextField(
-                                              validator: (value) =>
-                                                  value!.isEmpty
-                                                      ? 'Please'
-                                                      : null,
-                                              onSaved: (newValue) => truc
-                                                  .categorieModel!
-                                                  .title = newValue,
-                                              labelText: 'title',
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: MyTextField(
+                                                    validator: (value) =>
+                                                        value!.isEmpty
+                                                            ? 'Please'
+                                                            : null,
+                                                    onSaved: (newValue) => truc
+                                                        .categorieModel!
+                                                        .title = newValue,
+                                                    labelText: 'title',
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      05.0),
+                                                  child: DateTimePicker(
+                                                    type: DateTimePickerType
+                                                        .dateTimeSeparate,
+                                                    dateMask: 'd.MM.yyyy',
+                                                    initialValue: DateFormat(
+                                                            'yyyy-MM-d HH:mm')
+                                                        .format(DateTime.now()),
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2100),
+                                                    dateLabelText: 'Date',
+                                                    onChanged: (val) =>
+                                                        print(val),
+                                                    validator: (val) => val!
+                                                            .isEmpty
+                                                        ? 'Please a choose a Date'
+                                                        : null,
+                                                    onSaved: (newValue) => truc
+                                                        .categorieModel!
+                                                        .debut = newValue,
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      labelText: 'Debut',
+                                                      labelStyle: TextStyle(
+                                                          fontSize: 18.0),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      05.0),
+                                                  child: DateTimePicker(
+                                                    type: DateTimePickerType
+                                                        .dateTimeSeparate,
+                                                    dateMask: 'd.MM.yyyy',
+                                                    initialValue: DateFormat(
+                                                            'yyyy-MM-d HH:mm')
+                                                        .format(DateTime.now()
+                                                            .add(Duration(
+                                                                hours: 2))),
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2100),
+                                                    dateLabelText: 'Date',
+                                                    onChanged: (val) =>
+                                                        print(val),
+                                                    validator: (val) => val!
+                                                            .isEmpty
+                                                        ? 'Please a choose a Date'
+                                                        : null,
+                                                    onSaved: (newValue) => truc
+                                                        .categorieModel!
+                                                        .fin = newValue,
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      labelText: 'Debut',
+                                                      labelStyle: TextStyle(
+                                                          fontSize: 18.0),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child:
+                                                      DropdownButtonFormField<
+                                                          String>(
+                                                    validator: (value) =>
+                                                        value!.isEmpty
+                                                            ? 'Please'
+                                                            : null,
+                                                    decoration: InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      labelText: 'priority',
+                                                      labelStyle: TextStyle(
+                                                          fontSize: 18.0),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                      ),
+                                                    ),
+                                                    items: truc.items
+                                                        .map((String value) {
+                                                      //categorieModel.priority = value;
+                                                      return new DropdownMenuItem<
+                                                          String>(
+                                                        value: value,
+                                                        child: new Text(
+                                                          value,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                    onChanged: (value) => truc
+                                                        .categorieModel!
+                                                        .priority = value,
+                                                    //  value: categorieModel.priority ?? _items[0],
+                                                    //onSaved: (newValue) =>
+                                                    //  categorieModel.priority = newValue,
+                                                  ),
+                                                ),
+                                              ],
                                             ))
                                       ],
                                     ),

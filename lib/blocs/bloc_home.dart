@@ -40,6 +40,11 @@ class BlocHome extends Bloc {
 class HomeState {
   final bool isActive;
   CollectionReference? collectionReferencecat;
+  final List<String> items = [
+    'Done',
+    'Pending',
+    'In Process',
+  ];
 
   //******Categorie *******/
 

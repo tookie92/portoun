@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -48,6 +50,7 @@ class MyCalendar extends StatelessWidget {
               for (var element in iterable) {
                 CategorieModel? categorieModel =
                     CategorieModel.fromSnapShot(element);
+                final Random random = new Random();
                 collection.add(
                   Meeting(
                     eventName: '${categorieModel.title}',
@@ -56,7 +59,7 @@ class MyCalendar extends StatelessWidget {
                         .parse('${categorieModel.debut}'),
                     to: DateFormat('yyyy-MM-dd HH:mm')
                         .parse('${categorieModel.fin}'),
-                    background: Colors.amber,
+                    background: bloc.colorCollection![random.nextInt(9)],
                     resourceId: '0001',
                   ),
                 );

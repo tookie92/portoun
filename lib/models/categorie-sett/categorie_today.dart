@@ -102,8 +102,10 @@ showCategorieToday(DocumentSnapshot res, BuildContext context) {
               left: 120.0,
               child: Container(
                 child: MyText(
-                  label: DateFormat('d.MM.yyyy')
-                      .format(DateTime.parse('${categorieModel.debut}')),
+                  label: categorieModel.debut == null
+                      ? 'Please add a Date'
+                      : DateFormat.yMEd('fr')
+                          .format(DateTime.parse('${categorieModel.debut}')),
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
                 ),
