@@ -12,7 +12,7 @@ class Accueil extends StatelessWidget {
       body: Container(
         height: size.height,
         width: size.width,
-        decoration: BoxDecoration(color: Colors.amber),
+        decoration: BoxDecoration(color: Colors.white),
         child: StreamBuilder<HomeState>(
           stream: bloc.stream,
           builder: (context, snapshot) {
@@ -34,33 +34,72 @@ class Accueil extends StatelessWidget {
                 child: Container(
                   height: size.height,
                   width: size.width,
-                  child: Column(
+                  child: Stack(
                     children: [
-                      SizedBox(
-                        height: size.height * 0.45,
-                      ),
-                      FadeInUp(
-                        delay: Duration(milliseconds: 1000),
-                        child: MyText(
-                          label: 'Ilanga',
-                          fontSize: 45.0,
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
+                      Positioned(
+                        top: size.height * 0.55,
+                        child: FadeInUp(
+                          delay: Duration(milliseconds: 400),
+                          child: Container(
+                            height: size.height * 0.8,
+                            width: size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 25,
+                      Positioned(
+                        top: size.height * 0.6,
+                        child: FadeInUp(
+                          delay: Duration(milliseconds: 300),
+                          child: Container(
+                            height: size.height * 0.8,
+                            width: size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
                       ),
-                      FadeInUp(
-                        delay: Duration(milliseconds: 1500),
-                        child: MyTextButton(
-                          label: 'enter',
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context, BlocRouter().homePage());
-                          },
-                          backgroundColor: Colors.white,
-                          colorText: Colors.black,
+                      Positioned(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: size.height * 0.4,
+                              ),
+                              FadeInUp(
+                                delay: Duration(milliseconds: 600),
+                                child: Container(
+                                  child: MyText(
+                                    label: 'Ilanga',
+                                    color: Colors.green,
+                                    fontSize: 40.0,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              FadeInUp(
+                                delay: Duration(milliseconds: 900),
+                                child: Container(
+                                  child: MyTextButton(
+                                    label: 'Start',
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.amber,
+                                    onPressed: () => Navigator.pushReplacement(
+                                        context, BlocRouter().homePage()),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

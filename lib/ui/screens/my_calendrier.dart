@@ -14,7 +14,17 @@ class MyCalendar extends StatelessWidget {
     final bloc = BlocProvider.of<BlocCalendar>(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: Container(
         height: size.height,
         width: size.width,
@@ -66,25 +76,41 @@ class MyCalendar extends StatelessWidget {
               }
 
               return SfCalendar(
-                view: CalendarView.month,
+                view: CalendarView.schedule,
                 allowedViews: [
                   CalendarView.timelineDay,
                   CalendarView.timelineWeek,
                   CalendarView.timelineMonth,
                   CalendarView.month
                 ],
-                /* monthCellBuilder: (context, details) {
-                  var e = details.date;
-                  return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
+                scheduleViewMonthHeaderBuilder: (context, details) {
+                  final String monthName =
+                      truc.getMonthName(details.date.month);
+                  return Stack(
+                    children: [
+                      Image(
+                          image: ExactAssetImage('assets/images/doodle.png'),
+                          fit: BoxFit.cover,
+                          width: details.bounds.width,
+                          height: details.bounds.height),
+                      Container(
+                        decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.2),
-                          width: 0.0,
                         ),
                       ),
-                      child: Center(child: Text('${e.day}')));
-                },*/
-
+                      Positioned(
+                        left: 55,
+                        right: 0,
+                        top: 20,
+                        bottom: 0,
+                        child: Text(
+                          monthName + ' ' + details.date.year.toString(),
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      )
+                    ],
+                  );
+                },
                 initialDisplayDate: DateTime.now(),
                 dataSource: _getCalendarDataSource(collection),
                 monthViewSettings:

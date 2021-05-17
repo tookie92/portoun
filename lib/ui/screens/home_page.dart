@@ -175,7 +175,7 @@ class HomePage extends StatelessWidget {
                                                           String>(
                                                     validator: (value) =>
                                                         value!.isEmpty
-                                                            ? 'Please'
+                                                            ? 'Please fill'
                                                             : null,
                                                     decoration: InputDecoration(
                                                       filled: true,
@@ -207,9 +207,10 @@ class HomePage extends StatelessWidget {
                                                     onChanged: (value) => truc
                                                         .categorieModel!
                                                         .priority = value,
-                                                    //  value: categorieModel.priority ?? _items[0],
-                                                    //onSaved: (newValue) =>
-                                                    //  categorieModel.priority = newValue,
+                                                    value: truc.items[2],
+                                                    onSaved: (newValue) => truc
+                                                        .categorieModel!
+                                                        .priority = newValue,
                                                   ),
                                                 ),
                                               ],
@@ -417,7 +418,7 @@ class HomePage extends StatelessWidget {
                                         child: Center(
                                           child: MyText(
                                             textAlign: TextAlign.center,
-                                            label: 'no Categories fot today',
+                                            label: 'no Categories',
                                             color: Colors.black,
                                           ),
                                         ),
