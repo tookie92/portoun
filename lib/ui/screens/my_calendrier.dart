@@ -95,7 +95,7 @@ class MyCalendar extends StatelessWidget {
                           height: details.bounds.height),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withOpacity(0.4),
                         ),
                       ),
                       Positioned(
@@ -103,9 +103,11 @@ class MyCalendar extends StatelessWidget {
                         right: 0,
                         top: 20,
                         bottom: 0,
-                        child: Text(
-                          monthName + ' ' + details.date.year.toString(),
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        child: MyText(
+                          label: monthName + ' ' + details.date.year.toString(),
+                          color: Colors.white,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.w600,
                         ),
                       )
                     ],

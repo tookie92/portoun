@@ -289,7 +289,7 @@ class HomePage extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     MyText(
-                                      label: 'Projects ',
+                                      label: 'Projects  ',
                                       color: Colors.black,
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w600,
@@ -347,7 +347,9 @@ class HomePage extends StatelessWidget {
                                                   (DocumentSnapshot document) {
                                                 return Container(
                                                   child: showCategorie(
-                                                      document, context),
+                                                    document,
+                                                    context,
+                                                  ),
                                                 );
                                               }).toList(),
                                             ),

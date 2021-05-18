@@ -9,6 +9,7 @@ import 'package:portoun/models/models.dart';
 
 class BlocHome extends Bloc {
   final _streamController = StreamController<HomeState>();
+  CategorieModel? categorieModel;
 
   Sink<HomeState> get sink => _streamController.sink;
   Stream<HomeState> get stream => _streamController.stream;
@@ -22,9 +23,19 @@ class BlocHome extends Bloc {
     sink.add(resultat);
   }
 
+  Future<int> getEvent(CategorieModel? categorieModel) async {
+    var firestore = FirebaseFirestore.instance
+        .collection('categories')
+        .doc(categorieModel!.id)
+        .collection('events');
+
+    QuerySnapshot qn = await firestore.get();
+    qn.docs.length;
+    return qn.docs.length;
+  }
+
   BlocHome() {
     init();
-
     pageController = PageController(
       initialPage: 1,
       viewportFraction: 0.8,
@@ -39,6 +50,7 @@ class BlocHome extends Bloc {
 
 class HomeState {
   final bool isActive;
+  QuerySnapshot? querySnapshot;
   CollectionReference? collectionReferencecat;
   final List<String> items = [
     'Done',
@@ -58,6 +70,7 @@ class HomeState {
 
   HomeState({
     this.isActive = false,
+    this.querySnapshot,
   });
 
   //********Categorie Model *********/
@@ -122,6 +135,7 @@ class HomeState {
         .then((value) => print('Categorie Updated'))
         .catchError((error) => print('$error'));
   }
+
   //****** Ende  ********/
 
 }
