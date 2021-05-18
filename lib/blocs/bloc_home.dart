@@ -23,15 +23,14 @@ class BlocHome extends Bloc {
     sink.add(resultat);
   }
 
-  Future<int> getEvent(CategorieModel? categorieModel) async {
+  Stream<QuerySnapshot>? getEvent(CategorieModel? categorieModel) {
     var firestore = FirebaseFirestore.instance
         .collection('categories')
         .doc(categorieModel!.id)
         .collection('events');
 
-    QuerySnapshot qn = await firestore.get();
-    qn.docs.length;
-    return qn.docs.length;
+    Stream<QuerySnapshot> qn = firestore.snapshots();
+    return qn;
   }
 
   BlocHome() {

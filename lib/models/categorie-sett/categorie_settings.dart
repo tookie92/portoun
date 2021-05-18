@@ -164,16 +164,16 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
           Positioned(
             bottom: size.height * 0.04,
             left: size.height * 0.04,
-            child: FutureBuilder(
-              future: BlocHome().getEvent(categorieModel),
+            child: StreamBuilder<QuerySnapshot>(
+              stream: BlocHome().getEvent(categorieModel),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Text('Loading ...');
                 } else {
                   return MyText(
-                    label: (snapshot.data == 0)
+                    label: (snapshot.data!.docs.length == 0)
                         ? 'No Events'
-                        : '${snapshot.data} Events',
+                        : '${snapshot.data!.docs.length} Events',
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
                   );

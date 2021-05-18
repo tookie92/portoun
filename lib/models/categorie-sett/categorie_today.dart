@@ -52,16 +52,14 @@ showCategorieToday(DocumentSnapshot res, BuildContext context) {
     padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
     child: Container(
         height: 100.0,
+        width: size.width * 0.9,
         decoration: BoxDecoration(
           color: clr,
           boxShadow: [
             BoxShadow(
                 color: Colors.grey, offset: Offset(1.0, 2.0), blurRadius: 4.0)
           ],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(4.0),
-            bottomLeft: Radius.circular(4.0),
-          ),
+          borderRadius: BorderRadius.circular(4.0),
         ),
         child: Stack(
           clipBehavior: Clip.none,
@@ -70,7 +68,7 @@ showCategorieToday(DocumentSnapshot res, BuildContext context) {
               left: 10.0,
               child: Container(
                 height: 100.0,
-                width: size.width,
+                width: size.width * 0.89,
                 decoration: BoxDecoration(
                   color: Colors.white,
                 ),

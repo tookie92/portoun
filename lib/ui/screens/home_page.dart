@@ -12,7 +12,8 @@ class HomePage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final bloc = BlocProvider.of<BlocHome>(context);
     final _formKey = GlobalKey<FormState>();
-
+    var datet = DateTime.now();
+    //print(DateFormat('yyyy-MM-dd ').format(datet));
     return Scaffold(
       body: Container(
         height: size.height,
