@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 //****************** */
 //****************** */
@@ -131,8 +132,8 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
                     await Navigator.push(
                         context, BlocRouter().seecatPage(categorieModel));
                   },
-                  icon: Icon(
-                    Icons.remove_red_eye,
+                  icon: FaIcon(
+                    FontAwesomeIcons.eye,
                     color: Colors.white,
                   ),
                   iconSize: 20.0,
@@ -141,8 +142,8 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
                   onPressed: () async {
                     await showMyCategorie(context, categorieModel);
                   },
-                  icon: Icon(
-                    Icons.edit,
+                  icon: FaIcon(
+                    FontAwesomeIcons.edit,
                     color: Colors.white,
                   ),
                   iconSize: 20.0,
@@ -152,8 +153,8 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
                     await HomeState().deleteCategorie(categorieModel);
                     // await _showMyUpdate(context, categorieModel);
                   },
-                  icon: Icon(
-                    Icons.delete,
+                  icon: FaIcon(
+                    FontAwesomeIcons.trashAlt,
                     color: Colors.white,
                   ),
                   iconSize: 20.0,
@@ -231,7 +232,7 @@ Future showMyCategorie(
                             children: [
                               IconButton(
                                 onPressed: () => Navigator.pop(context),
-                                icon: Icon(Icons.arrow_back_ios),
+                                icon: FaIcon(FontAwesomeIcons.chevronLeft),
                               ),
                             ],
                           ),

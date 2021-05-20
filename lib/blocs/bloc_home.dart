@@ -23,6 +23,13 @@ class BlocHome extends Bloc {
     sink.add(resultat);
   }
 
+  void done() {
+    final resultat = HomeState(
+      isDone: true,
+    );
+    sink.add(resultat);
+  }
+
   Stream<QuerySnapshot>? getEvent(CategorieModel? categorieModel) {
     var firestore = FirebaseFirestore.instance
         .collection('categories')
@@ -49,6 +56,7 @@ class BlocHome extends Bloc {
 
 class HomeState {
   final bool isActive;
+  final bool isDone;
   QuerySnapshot? querySnapshot;
   CollectionReference? collectionReferencecat;
   final List<String> items = [
@@ -68,6 +76,7 @@ class HomeState {
   //******* Ende *******/
 
   HomeState({
+    this.isDone = false,
     this.isActive = false,
     this.querySnapshot,
   });

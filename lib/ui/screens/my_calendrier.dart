@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
@@ -18,8 +19,8 @@ class MyCalendar extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
+          icon: FaIcon(
+            FontAwesomeIcons.chevronLeft,
             color: Colors.black,
           ),
           onPressed: () => Navigator.pop(context),
@@ -77,6 +78,7 @@ class MyCalendar extends StatelessWidget {
 
               return SfCalendar(
                 view: CalendarView.schedule,
+                showDatePickerButton: true,
                 allowedViews: [
                   CalendarView.timelineDay,
                   CalendarView.timelineWeek,

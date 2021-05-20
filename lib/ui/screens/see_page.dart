@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/models/event_model.dart';
@@ -46,8 +47,8 @@ class SeePage extends StatelessWidget {
                     backgroundColor: Colors.white,
                     leading: IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        Icons.arrow_back_ios,
+                      icon: FaIcon(
+                        FontAwesomeIcons.chevronLeft,
                         color: Colors.black,
                       ),
                     ),
@@ -63,8 +64,8 @@ class SeePage extends StatelessWidget {
                           onPressed: () async {
                             await _showMyDialog(context, s, categorieModel.id);
                           },
-                          icon: Icon(
-                            Icons.add,
+                          icon: FaIcon(
+                            FontAwesomeIcons.plus,
                             color: Colors.black,
                           ))
                     ],

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie-sett/c_settings.dart';
@@ -12,7 +13,6 @@ class HomePage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final bloc = BlocProvider.of<BlocHome>(context);
     final _formKey = GlobalKey<FormState>();
-    var datet = DateTime.now();
     //print(DateFormat('yyyy-MM-dd ').format(datet));
     return Scaffold(
       body: Container(
@@ -56,8 +56,8 @@ class HomePage extends StatelessWidget {
                     leading: IconButton(
                         onPressed: () => Navigator.push(
                             context, BlocRouter().calendrierPage()),
-                        icon: Icon(
-                          Icons.calendar_today,
+                        icon: FaIcon(
+                          FontAwesomeIcons.calendarAlt,
                           color: Colors.black,
                         )),
                     actions: [
@@ -244,8 +244,8 @@ class HomePage extends StatelessWidget {
                               },
                             );
                           },
-                          icon: Icon(
-                            Icons.add,
+                          icon: FaIcon(
+                            FontAwesomeIcons.plus,
                             color: Colors.black,
                           ))
                     ],
@@ -295,17 +295,21 @@ class HomePage extends StatelessWidget {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    MyText(
-                                      label: 'More',
-                                      color: Colors.black.withOpacity(0.3),
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w600,
+                                    TextButton(
+                                      onPressed: () => Navigator.push(
+                                          context, BlocRouter().chartPage()),
+                                      child: MyText(
+                                        label: 'see chart',
+                                        color: Colors.black.withOpacity(0.3),
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                               SizedBox(
-                                height: 30.0,
+                                height: 10.0,
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(

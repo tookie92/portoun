@@ -34,35 +34,19 @@ class Accueil extends StatelessWidget {
                 child: Container(
                   height: size.height,
                   width: size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/doodle.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   child: Stack(
                     children: [
-                      Positioned(
-                        top: size.height * 0.55,
-                        child: FadeInUp(
-                          delay: Duration(milliseconds: 400),
-                          child: Container(
-                            height: size.height * 0.8,
-                            width: size.width,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: size.height * 0.6,
-                        child: FadeInUp(
-                          delay: Duration(milliseconds: 300),
-                          child: Container(
-                            height: size.height * 0.8,
-                            width: size.width,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
+                      Container(
+                        height: size.height,
+                        width: size.width,
+                        decoration:
+                            BoxDecoration(color: Colors.black.withOpacity(0.3)),
                       ),
                       Positioned(
                         child: Align(
@@ -73,12 +57,13 @@ class Accueil extends StatelessWidget {
                                 height: size.height * 0.4,
                               ),
                               FadeInUp(
+                                // animate: truc.isDone ? true : false,
                                 delay: Duration(milliseconds: 600),
                                 child: Container(
                                   child: MyText(
                                     label: 'Ilanga',
                                     color: Colors.green,
-                                    fontSize: 40.0,
+                                    fontSize: 50.0,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
