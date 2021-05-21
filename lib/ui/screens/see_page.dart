@@ -15,7 +15,7 @@ class SeePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final bloc = BlocProvider.of<BlocHome>(context);
-    print(categorieModel.id);
+
     // final _formkey = GlobalKey<FormState>();
     return Scaffold(
       body: Container(
@@ -39,6 +39,7 @@ class SeePage extends StatelessWidget {
               );
             } else {
               // print(truc.eventModel!.!.length.toString());
+              print(categorieModel.id);
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -204,8 +205,12 @@ class SeePage extends StatelessWidget {
                                               caption: 'Delete',
                                               color: Colors.red,
                                               icon: Icons.delete,
-                                              onTap: () => truc.deleteEvent(
-                                                  trac, '${categorieModel.id}'),
+                                              onTap: () {
+                                                truc.deleteCategory(
+                                                    '${categorieModel.id}');
+                                                truc.deleteEvent(trac,
+                                                    '${categorieModel.id}');
+                                              },
                                             ),
                                           ],
                                         );
@@ -242,7 +247,7 @@ Future<void> _showMyDialog(
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Add a Event'),
+        title: Text('Add a Event $categorieModele'),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
@@ -268,11 +273,10 @@ Future<void> _showMyDialog(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                print(homeState!.eventModel!.title);
-                // print(homeState.categorieModel!.id);
 
+                await homeState!.updateCategory(categorieModele!);
                 await homeState
-                    .addEvent(categorieModele!)
+                    .addEvent(categorieModele)
                     .then((value) => Navigator.pop(context));
               }
               _formKey.currentState!.reset();

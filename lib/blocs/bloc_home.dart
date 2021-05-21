@@ -70,7 +70,13 @@ class HomeState {
   CollectionReference? collectionReference =
       FirebaseFirestore.instance.collection('categories');
 
-  CategorieModel? categorieModel = CategorieModel('', '', '', '', '');
+  CategorieModel? categorieModel = CategorieModel(
+    '',
+    '',
+    '',
+    '',
+    '',
+  );
   EventModel? eventModel = EventModel('', '');
 
   //******* Ende *******/
@@ -108,6 +114,24 @@ class HomeState {
     await collectionReference!
         .doc(categorieModel.id)
         .update(categorieModel.toJson())
+        .then((value) => print('Categorie Updated'))
+        .catchError((error) => print('$error'));
+  }
+
+  Future<void> updateCategory(String categorie) async {
+    //collectionReference = db.collection('categories');
+    await collectionReference!
+        .doc(categorie)
+        .update({'count': FieldValue.increment(1)})
+        .then((value) => print('Categorie Updated'))
+        .catchError((error) => print('$error'));
+  }
+
+  Future<void> deleteCategory(String categorie) async {
+    //collectionReference = db.collection('categories');
+    await collectionReference!
+        .doc(categorie)
+        .update({'count': FieldValue.increment(-1)})
         .then((value) => print('Categorie Updated'))
         .catchError((error) => print('$error'));
   }
