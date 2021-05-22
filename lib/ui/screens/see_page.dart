@@ -63,7 +63,7 @@ class SeePage extends StatelessWidget {
                     actions: [
                       IconButton(
                           onPressed: () {
-                            bloc.getImage();
+                            // bloc.getImage();
                           },
                           icon: FaIcon(
                             FontAwesomeIcons.photoVideo,
