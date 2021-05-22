@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/event_model.dart';
@@ -10,11 +12,20 @@ import 'package:portoun/models/models.dart';
 class BlocHome extends Bloc {
   final _streamController = StreamController<HomeState>();
   CategorieModel? categorieModel;
+  //image
+  final picker = ImagePicker();
 
   Sink<HomeState> get sink => _streamController.sink;
   Stream<HomeState> get stream => _streamController.stream;
 
   PageController? pageController;
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    sink.add(
+      HomeState(image: File(pickedFile!.path)),
+    );
+  }
 
   void init() {
     final resultat = HomeState(
@@ -55,28 +66,20 @@ class BlocHome extends Bloc {
 }
 
 class HomeState {
+  File? image;
+  //nur image oben
   final bool isActive;
   final bool isDone;
   QuerySnapshot? querySnapshot;
   CollectionReference? collectionReferencecat;
-  final List<String> items = [
-    'Done',
-    'Pending',
-    'In Process',
-  ];
+  final List<String> items = ['Done', 'Pending', 'In Process'];
 
   //******Categorie *******/
 
   CollectionReference? collectionReference =
       FirebaseFirestore.instance.collection('categories');
 
-  CategorieModel? categorieModel = CategorieModel(
-    '',
-    '',
-    '',
-    '',
-    '',
-  );
+  CategorieModel? categorieModel = CategorieModel('', '', '', '', '');
   EventModel? eventModel = EventModel('', '');
 
   //******* Ende *******/
@@ -85,6 +88,7 @@ class HomeState {
     this.isDone = false,
     this.isActive = false,
     this.querySnapshot,
+    this.image,
   });
 
   //********Categorie Model *********/

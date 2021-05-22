@@ -62,6 +62,14 @@ class SeePage extends StatelessWidget {
                     ),
                     actions: [
                       IconButton(
+                          onPressed: () {
+                            bloc.getImage();
+                          },
+                          icon: FaIcon(
+                            FontAwesomeIcons.photoVideo,
+                            color: Colors.black,
+                          )),
+                      IconButton(
                           onPressed: () async {
                             await _showMyDialog(context, s, categorieModel.id);
                           },
@@ -206,10 +214,12 @@ class SeePage extends StatelessWidget {
                                               color: Colors.red,
                                               icon: Icons.delete,
                                               onTap: () {
-                                                truc.deleteCategory(
-                                                    '${categorieModel.id}');
-                                                truc.deleteEvent(trac,
-                                                    '${categorieModel.id}');
+                                                truc
+                                                    .deleteEvent(trac,
+                                                        '${categorieModel.id}')
+                                                    .whenComplete(() =>
+                                                        truc.deleteCategory(
+                                                            '${categorieModel.id}'));
                                               },
                                             ),
                                           ],
@@ -274,9 +284,10 @@ Future<void> _showMyDialog(
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
-                await homeState!.updateCategory(categorieModele!);
-                await homeState
+                await homeState!
                     .addEvent(categorieModele)
+                    .whenComplete(
+                        () => homeState.updateCategory(categorieModele!))
                     .then((value) => Navigator.pop(context));
               }
               _formKey.currentState!.reset();
