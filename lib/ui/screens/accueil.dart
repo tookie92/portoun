@@ -34,19 +34,12 @@ class Accueil extends StatelessWidget {
                 child: Container(
                   height: size.height,
                   width: size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/doodle.png'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  decoration: BoxDecoration(color: Colors.white),
                   child: Stack(
                     children: [
                       Container(
                         height: size.height,
                         width: size.width,
-                        decoration:
-                            BoxDecoration(color: Colors.black.withOpacity(0.3)),
                       ),
                       Positioned(
                         child: Align(
@@ -56,23 +49,17 @@ class Accueil extends StatelessWidget {
                               SizedBox(
                                 height: size.height * 0.4,
                               ),
-                              FadeInUp(
-                                // animate: truc.isDone ? true : false,
-                                delay: Duration(milliseconds: 600),
-                                child: Container(
-                                  child: MyText(
-                                    label: 'Ilanga',
-                                    color: Colors.green,
-                                    fontSize: 50.0,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                              Container(
+                                child: Image(
+                                  image: AssetImage('assets/images/ilanga.gif'),
+                                  height: 200.0,
                                 ),
                               ),
                               SizedBox(
                                 height: 30.0,
                               ),
                               FadeInUp(
-                                delay: Duration(milliseconds: 900),
+                                delay: Duration(milliseconds: 1700),
                                 child: Container(
                                   child: MyTextButton(
                                     label: 'Start',

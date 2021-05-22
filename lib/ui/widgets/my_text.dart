@@ -25,7 +25,7 @@ class MyText extends StatelessWidget {
       label!,
       textAlign: textAlign,
       overflow: overflow,
-      style: GoogleFonts.signika(
+      style: GoogleFonts.montserrat(
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
