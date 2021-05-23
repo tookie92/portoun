@@ -43,7 +43,7 @@ class SeePage extends StatelessWidget {
               );
             } else {
               //****image */
-              UploadTask? top;
+              // UploadTask? top;
               Future upload() async {
                 String filename = basename(truc.image.path);
                 Reference fire = FirebaseStorage.instance.ref().child(filename);
@@ -58,8 +58,6 @@ class SeePage extends StatelessWidget {
                 final percentage = (done * 100).toStringAsFixed(2);
                 print(url);
                 print(percentage);
-                //  top = uploadTask;
-                return uploadTask;
               }
 
               return CustomScrollView(
@@ -83,24 +81,6 @@ class SeePage extends StatelessWidget {
                       centerTitle: true,
                     ),
                     actions: [
-                      IconButton(
-                          onPressed: () {
-                            upload();
-                          },
-                          icon: FaIcon(
-                            FontAwesomeIcons.airbnb,
-                            color: Colors.black,
-                          )),
-                      IconButton(
-                          onPressed: () {
-                            bloc.getImage();
-
-                            //  truc.upload();
-                          },
-                          icon: FaIcon(
-                            FontAwesomeIcons.photoVideo,
-                            color: Colors.black,
-                          )),
                       IconButton(
                           onPressed: () async {
                             await _showMyDialog(context, s, categorieModel.id);
@@ -284,6 +264,7 @@ Future<void> _showMyDialog(
   HomeState? homeState = sn.data;
 
   final _formKey = GlobalKey<FormState>();
+  //print(homeState!.image);
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -295,11 +276,41 @@ Future<void> _showMyDialog(
             children: <Widget>[
               Form(
                 key: _formKey,
-                child: MyTextField(
-                  validator: (value) => value!.isEmpty ? 'Please enter ' : null,
-                  labelText: 'Event',
-                  onSaved: (newValue) =>
-                      homeState!.eventModel!.title = newValue,
+                child: Column(
+                  children: [
+                    MyTextField(
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter ' : null,
+                      labelText: 'Event',
+                      onSaved: (newValue) =>
+                          homeState!.eventModel!.title = newValue,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: MyTextField(
+                            validator: (value) =>
+                                value!.isEmpty ? 'Please enter ' : null,
+                            labelText: 'picture',
+                            initialValue: '${homeState!.image}',
+                            onSaved: (newValue) =>
+                                homeState.eventModel!.picture = newValue,
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              BlocHome()
+                                  .getImage()
+                                  .then((value) => print(homeState.image));
+                            },
+                            icon: FaIcon(FontAwesomeIcons.cameraRetro))
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -316,7 +327,7 @@ Future<void> _showMyDialog(
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
-                await homeState!
+                await homeState
                     .addEvent(categorieModele)
                     .whenComplete(
                         () => homeState.updateCategory(categorieModele!))

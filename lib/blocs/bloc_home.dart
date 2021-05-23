@@ -86,7 +86,7 @@ class HomeState {
       FirebaseFirestore.instance.collection('categories');
 
   CategorieModel? categorieModel = CategorieModel('', '', '', '', '');
-  EventModel? eventModel = EventModel('', '');
+  EventModel? eventModel = EventModel('', '', '');
 
   //******* Ende *******/
 
