@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -38,8 +40,8 @@ class SeePage extends StatelessWidget {
                 ),
               );
             } else {
-              // print(truc.eventModel!.!.length.toString());
-              print(categorieModel.id);
+              //****image */
+
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -233,6 +235,22 @@ class SeePage extends StatelessWidget {
                       childCount: 1,
                     ),
                   ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return Center(
+                          child: truc.image == File('')
+                              ? Text('No image selected.')
+                              : Image.file(
+                                  truc.image,
+                                  width: 200,
+                                  height: 200.0,
+                                ),
+                        );
+                      },
+                      childCount: 1,
+                    ),
+                  )
                 ],
               );
             }
@@ -257,7 +275,7 @@ Future<void> _showMyDialog(
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Add a Event $categorieModele'),
+        title: Text('Add a Event'),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[

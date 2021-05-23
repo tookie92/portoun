@@ -14,18 +14,18 @@ class BlocHome extends Bloc {
   CategorieModel? categorieModel;
   //image
   final picker = ImagePicker();
-
-  Sink<HomeState> get sink => _streamController.sink;
-  Stream<HomeState> get stream => _streamController.stream;
-
-  PageController? pageController;
-
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     sink.add(
       HomeState(image: File(pickedFile!.path)),
     );
   }
+
+  //Fin img;
+  Sink<HomeState> get sink => _streamController.sink;
+  Stream<HomeState> get stream => _streamController.stream;
+
+  PageController? pageController;
 
   void init() {
     final resultat = HomeState(
@@ -66,7 +66,9 @@ class BlocHome extends Bloc {
 }
 
 class HomeState {
-  File? image;
+  File image;
+  final picker = ImagePicker();
+
   //nur image oben
   final bool isActive;
   final bool isDone;
@@ -88,8 +90,9 @@ class HomeState {
     this.isDone = false,
     this.isActive = false,
     this.querySnapshot,
-    this.image,
-  });
+    image,
+  }) : image = image ??
+            File('/Users/mac/Desktop/djang/portoun/assets/images/default.png');
 
   //********Categorie Model *********/
   final db = FirebaseFirestore.instance;
