@@ -16,9 +16,13 @@ class BlocHome extends Bloc {
   final picker = ImagePicker();
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    sink.add(
-      HomeState(image: File(pickedFile!.path)),
-    );
+    if (pickedFile != null) {
+      sink.add(
+        HomeState(image: File(pickedFile.path)),
+      );
+    } else {
+      print('No picture');
+    }
   }
 
   //Fin img;
