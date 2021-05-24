@@ -43,24 +43,6 @@ class SeePage extends StatelessWidget {
               );
             } else {
               //****image */
-              UploadTask? top;
-              Future upload() async {
-                String filename = basename(truc.image.path);
-                Reference fire = FirebaseStorage.instance.ref().child(filename);
-                UploadTask uploadTask = fire.putFile(truc.image);
-                TaskSnapshot taskSnapshot = (await uploadTask);
-                final String url = await taskSnapshot.ref.getDownloadURL();
-                //print(taskSnapshot.bytesTransferred /
-                //  taskSnapshot.totalBytes *
-                // 100);
-                var done =
-                    taskSnapshot.bytesTransferred / taskSnapshot.totalBytes;
-                final percentage = (done * 100).toStringAsFixed(2);
-                print(url);
-                print(percentage);
-                //  top = uploadTask;
-                return uploadTask;
-              }
 
               return CustomScrollView(
                 slivers: [
@@ -84,26 +66,13 @@ class SeePage extends StatelessWidget {
                     ),
                     actions: [
                       IconButton(
-                          onPressed: () {
-                            upload();
-                          },
-                          icon: FaIcon(
-                            FontAwesomeIcons.airbnb,
-                            color: Colors.black,
-                          )),
-                      IconButton(
-                          onPressed: () {
-                            bloc.getImage();
-
-                            //  truc.upload();
-                          },
-                          icon: FaIcon(
-                            FontAwesomeIcons.photoVideo,
-                            color: Colors.black,
-                          )),
-                      IconButton(
                           onPressed: () async {
-                            await _showMyDialog(context, s, categorieModel.id);
+                            await _showMyDialog(
+                              context,
+                              s,
+                              bloc,
+                              categorieModel.id,
+                            );
                           },
                           icon: FaIcon(
                             FontAwesomeIcons.plus,
@@ -279,6 +248,7 @@ class SeePage extends StatelessWidget {
 Future<void> _showMyDialog(
   BuildContext context,
   AsyncSnapshot<HomeState> sn,
+  BlocHome bloc,
   String? categorieModele,
 ) async {
   HomeState? homeState = sn.data;
@@ -295,11 +265,42 @@ Future<void> _showMyDialog(
             children: <Widget>[
               Form(
                 key: _formKey,
-                child: MyTextField(
-                  validator: (value) => value!.isEmpty ? 'Please enter ' : null,
-                  labelText: 'Event',
-                  onSaved: (newValue) =>
-                      homeState!.eventModel!.title = newValue,
+                child: Column(
+                  children: [
+                    MyTextField(
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter ' : null,
+                      labelText: 'Event',
+                      onSaved: (newValue) =>
+                          homeState!.eventModel!.title = newValue,
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: MyTextField(
+                            validator: (value) =>
+                                value!.isEmpty ? 'Please enter ' : null,
+                            labelText: 'Picture',
+                            initialValue: homeState!.image.path ==
+                                    '/Users/mac/Desktop/djang/portoun/assets/images/default.png'
+                                ? 'No picture'
+                                : '${homeState.image}',
+                            onSaved: (newValue) =>
+                                homeState.eventModel!.picture = newValue,
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              bloc.getImage();
+                            },
+                            icon: FaIcon(FontAwesomeIcons.camera))
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -316,7 +317,7 @@ Future<void> _showMyDialog(
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
-                await homeState!
+                await homeState
                     .addEvent(categorieModele)
                     .whenComplete(
                         () => homeState.updateCategory(categorieModele!))
