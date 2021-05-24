@@ -6,7 +6,7 @@ class EventModel {
   String? picture;
   String? author;
 
-  EventModel(this.title, this.author);
+  EventModel(this.title, this.author, this.picture);
 
   EventModel.fromSnapshot(DocumentSnapshot doc)
       : id = doc.id,

@@ -1,13 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
+
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
->>>>>>> upload
 
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/event_model.dart';
@@ -18,9 +17,6 @@ class BlocHome extends Bloc {
   CategorieModel? categorieModel;
   //late File image = File('d');
   //image
-<<<<<<< HEAD
-  //final picker = ImagePicker();
-=======
   final picker = ImagePicker();
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -32,7 +28,6 @@ class BlocHome extends Bloc {
       print('No picture');
     }
   }
->>>>>>> upload
 
   //Fin img;
   Sink<HomeState> get sink => _streamController.sink;
@@ -80,12 +75,9 @@ class BlocHome extends Bloc {
 }
 
 class HomeState {
-<<<<<<< HEAD
-=======
   File image;
   final picker = ImagePicker();
 
->>>>>>> upload
   //nur image oben
   final bool isActive;
   final bool isDone;
@@ -107,14 +99,9 @@ class HomeState {
     this.isDone = false,
     this.isActive = false,
     this.querySnapshot,
-<<<<<<< HEAD
-    // this.image,
-  });
-=======
     image,
   }) : image = image ??
             File('/Users/mac/Desktop/djang/portoun/assets/images/default.png');
->>>>>>> upload
 
   //********Categorie Model *********/
   final db = FirebaseFirestore.instance;
