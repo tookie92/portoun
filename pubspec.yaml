@@ -36,6 +36,7 @@ dependencies:
   intl: ^0.17.0
   syncfusion_flutter_calendar: ^19.1.63
   syncfusion_flutter_charts: ^19.1.63
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

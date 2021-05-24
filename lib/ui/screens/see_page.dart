@@ -38,8 +38,8 @@ class SeePage extends StatelessWidget {
                 ),
               );
             } else {
-              // print(truc.eventModel!.!.length.toString());
-              print(categorieModel.id);
+              //****image */
+
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -62,16 +62,13 @@ class SeePage extends StatelessWidget {
                     ),
                     actions: [
                       IconButton(
-                          onPressed: () {
-                            // bloc.getImage();
-                          },
-                          icon: FaIcon(
-                            FontAwesomeIcons.photoVideo,
-                            color: Colors.black,
-                          )),
-                      IconButton(
                           onPressed: () async {
-                            await _showMyDialog(context, s, categorieModel.id);
+                            await _showMyDialog(
+                              context,
+                              s,
+                              bloc,
+                              categorieModel.id,
+                            );
                           },
                           icon: FaIcon(
                             FontAwesomeIcons.plus,
@@ -247,6 +244,7 @@ class SeePage extends StatelessWidget {
 Future<void> _showMyDialog(
   BuildContext context,
   AsyncSnapshot<HomeState> sn,
+  BlocHome bloc,
   String? categorieModele,
 ) async {
   HomeState? homeState = sn.data;
@@ -257,17 +255,48 @@ Future<void> _showMyDialog(
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Add a Event $categorieModele'),
+        title: Text('Add a Event'),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
               Form(
                 key: _formKey,
-                child: MyTextField(
-                  validator: (value) => value!.isEmpty ? 'Please enter ' : null,
-                  labelText: 'Event',
-                  onSaved: (newValue) =>
-                      homeState!.eventModel!.title = newValue,
+                child: Column(
+                  children: [
+                    MyTextField(
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter ' : null,
+                      labelText: 'Event',
+                      onSaved: (newValue) =>
+                          homeState!.eventModel!.title = newValue,
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: MyTextField(
+                            validator: (value) =>
+                                value!.isEmpty ? 'Please enter ' : null,
+                            labelText: 'Picture',
+                            initialValue: homeState!.image.path ==
+                                    '/Users/mac/Desktop/djang/portoun/assets/images/default.png'
+                                ? 'No picture'
+                                : '${homeState.image}',
+                            onSaved: (newValue) =>
+                                homeState.eventModel!.picture = newValue,
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              bloc.getImage();
+                            },
+                            icon: FaIcon(FontAwesomeIcons.camera))
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -284,7 +313,7 @@ Future<void> _showMyDialog(
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
-                await homeState!
+                await homeState
                     .addEvent(categorieModele)
                     .whenComplete(
                         () => homeState.updateCategory(categorieModele!))

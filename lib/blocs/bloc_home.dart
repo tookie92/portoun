@@ -1,7 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+>>>>>>> upload
 
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/event_model.dart';
@@ -12,8 +18,23 @@ class BlocHome extends Bloc {
   CategorieModel? categorieModel;
   //late File image = File('d');
   //image
+<<<<<<< HEAD
   //final picker = ImagePicker();
+=======
+  final picker = ImagePicker();
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      sink.add(
+        HomeState(image: File(pickedFile.path)),
+      );
+    } else {
+      print('No picture');
+    }
+  }
+>>>>>>> upload
 
+  //Fin img;
   Sink<HomeState> get sink => _streamController.sink;
   Stream<HomeState> get stream => _streamController.stream;
 
@@ -59,6 +80,12 @@ class BlocHome extends Bloc {
 }
 
 class HomeState {
+<<<<<<< HEAD
+=======
+  File image;
+  final picker = ImagePicker();
+
+>>>>>>> upload
   //nur image oben
   final bool isActive;
   final bool isDone;
@@ -80,8 +107,14 @@ class HomeState {
     this.isDone = false,
     this.isActive = false,
     this.querySnapshot,
+<<<<<<< HEAD
     // this.image,
   });
+=======
+    image,
+  }) : image = image ??
+            File('/Users/mac/Desktop/djang/portoun/assets/images/default.png');
+>>>>>>> upload
 
   //********Categorie Model *********/
   final db = FirebaseFirestore.instance;
@@ -166,4 +199,20 @@ class HomeState {
 
   //****** Ende  ********/
 
+  Future upload() async {
+    String filename = basename(image.path);
+    Reference fire = FirebaseStorage.instance.ref().child('event/$filename');
+    UploadTask uploadTask = fire.putFile(image);
+    TaskSnapshot taskSnapshot = (await uploadTask);
+    final String url = await taskSnapshot.ref.getDownloadURL();
+    //print(taskSnapshot.bytesTransferred /
+    //  taskSnapshot.totalBytes *
+    // 100);
+    var done = taskSnapshot.bytesTransferred / taskSnapshot.totalBytes;
+    final percentage = (done * 100).toStringAsFixed(2);
+    print(url);
+    print(percentage);
+    //  top = uploadTask;
+    return url;
+  }
 }
