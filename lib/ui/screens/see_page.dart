@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portoun/blocs/blocs.dart';
-import 'package:path/path.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/models/event_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
@@ -42,21 +40,6 @@ class SeePage extends StatelessWidget {
             } else {
               //****image */
               // UploadTask? top;
-              Future upload() async {
-                String filename = basename(truc.image.path);
-                Reference fire = FirebaseStorage.instance.ref().child(filename);
-                UploadTask uploadTask = fire.putFile(truc.image);
-                TaskSnapshot taskSnapshot = (await uploadTask);
-                final String url = await taskSnapshot.ref.getDownloadURL();
-                //print(taskSnapshot.bytesTransferred /
-                //  taskSnapshot.totalBytes *
-                // 100);
-                var done =
-                    taskSnapshot.bytesTransferred / taskSnapshot.totalBytes;
-                final percentage = (done * 100).toStringAsFixed(2);
-                print(url);
-                print(percentage);
-              }
 
               return CustomScrollView(
                 slivers: [

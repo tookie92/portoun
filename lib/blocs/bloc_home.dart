@@ -1,12 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/event_model.dart';
@@ -17,17 +12,6 @@ class BlocHome extends Bloc {
   CategorieModel? categorieModel;
   //late File image = File('d');
   //image
-  final picker = ImagePicker();
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      sink.add(
-        HomeState(image: File(pickedFile.path)),
-      );
-    } else {
-      print('No picture');
-    }
-  }
 
   //Fin img;
   Sink<HomeState> get sink => _streamController.sink;
@@ -75,9 +59,6 @@ class BlocHome extends Bloc {
 }
 
 class HomeState {
-  File image;
-  final picker = ImagePicker();
-
   //nur image oben
   final bool isActive;
   final bool isDone;
@@ -99,10 +80,7 @@ class HomeState {
     this.isDone = false,
     this.isActive = false,
     this.querySnapshot,
-    image,
-  }) : image = image ??
-            File('/Users/mac/Desktop/djang/portoun/assets/images/default.png');
-
+  });
   //********Categorie Model *********/
   final db = FirebaseFirestore.instance;
 
@@ -186,20 +164,4 @@ class HomeState {
 
   //****** Ende  ********/
 
-  Future upload() async {
-    String filename = basename(image.path);
-    Reference fire = FirebaseStorage.instance.ref().child('event/$filename');
-    UploadTask uploadTask = fire.putFile(image);
-    TaskSnapshot taskSnapshot = (await uploadTask);
-    final String url = await taskSnapshot.ref.getDownloadURL();
-    //print(taskSnapshot.bytesTransferred /
-    //  taskSnapshot.totalBytes *
-    // 100);
-    var done = taskSnapshot.bytesTransferred / taskSnapshot.totalBytes;
-    final percentage = (done * 100).toStringAsFixed(2);
-    print(url);
-    print(percentage);
-    //  top = uploadTask;
-    return url;
-  }
 }

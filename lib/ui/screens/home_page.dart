@@ -295,10 +295,17 @@ class HomePage extends StatelessWidget {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    TextButton(
+                                    SizedBox(
+                                      width: 100.0,
+                                    ),
+                                    TextButton.icon(
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.chartBar,
+                                        color: Colors.black.withOpacity(0.3),
+                                      ),
                                       onPressed: () => Navigator.push(
                                           context, BlocRouter().chartPage()),
-                                      child: MyText(
+                                      label: MyText(
                                         label: 'see chart',
                                         color: Colors.black.withOpacity(0.3),
                                         fontSize: 12.0,
@@ -361,9 +368,6 @@ class HomePage extends StatelessWidget {
                                           );
                                   },
                                 ),
-                              ),
-                              SizedBox(
-                                height: 30.0,
                               ),
                             ],
                           ),
