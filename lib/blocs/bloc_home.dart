@@ -9,30 +9,18 @@ import 'package:portoun/models/models.dart';
 
 class BlocHome extends Bloc {
   final _streamController = StreamController<HomeState>();
-  CategorieModel? categorieModel;
-  //late File image = File('d');
-  //image
 
-  //Fin img;
   Sink<HomeState> get sink => _streamController.sink;
   Stream<HomeState> get stream => _streamController.stream;
 
   PageController? pageController;
 
   void init() {
-    // getImage();
     final resultat = HomeState(
       isActive: true,
     );
     sink.add(resultat);
   }
-
-  /*void done() {
-    final resultat = HomeState(
-      isDone: true,
-    );
-    sink.add(resultat);
-  }*/
 
   Stream<QuerySnapshot>? getEvent(CategorieModel? categorieModel) {
     var firestore = FirebaseFirestore.instance
@@ -71,8 +59,12 @@ class HomeState {
   CollectionReference? collectionReference =
       FirebaseFirestore.instance.collection('categories');
 
-  CategorieModel? categorieModel = CategorieModel('', '', '', '', '');
-  EventModel? eventModel = EventModel('', '');
+  CategorieModel? categorieModel = CategorieModel(
+    '',
+    '',
+    '',
+  );
+  EventModel? eventModel = EventModel('', '', '', '');
 
   //******* Ende *******/
 

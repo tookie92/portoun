@@ -4,16 +4,12 @@ class CategorieModel {
   String? id;
   String? title;
   String? priority;
-  String? debut;
-  String? fin;
   String? author;
   int? count;
 
   CategorieModel(
     this.title,
     this.priority,
-    this.fin,
-    this.debut,
     this.author,
   );
 
@@ -21,8 +17,7 @@ class CategorieModel {
       : id = doc.id,
         title = doc.data()!['title'],
         priority = doc.data()!['priority'],
-        debut = doc.data()!['debut'],
-        fin = doc.data()!['fin'],
+       
         author = doc.data()!['author'],
         count = doc.data()!['count'];
 
@@ -30,8 +25,7 @@ class CategorieModel {
     Map<String, dynamic> map = {
       'title': this.title,
       'priority': this.priority,
-      'debut': this.debut,
-      'fin': this.fin,
+      
       'count': this.count,
       'author': 'joseph ikinda'
     };

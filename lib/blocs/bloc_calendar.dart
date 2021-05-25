@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:portoun/blocs/blocs.dart';
+import 'package:portoun/models/categorie_model.dart';
 
 class BlocCalendar extends Bloc {
   final _streamController = StreamController<CalendarState>();
   List<Color>? colorCollection;
+  // CategorieModel? categorieModel = CategorieModel('', '', '');
 
   Sink<CalendarState> get sink => _streamController.sink;
   Stream<CalendarState> get stream => _streamController.stream;
@@ -16,17 +18,20 @@ class BlocCalendar extends Bloc {
     sink.add(resultat);
   }
 
-  Future<QuerySnapshot>? getCategorie() async {
-    QuerySnapshot qn =
-        await FirebaseFirestore.instance.collection('categories').get();
+  Future<QuerySnapshot>? getEvent(CategorieModel? categorieModel) async {
+    var firestore = FirebaseFirestore.instance
+        .collection('categories')
+        .doc(categorieModel!.id)
+        .collection('events');
 
-    qn.docs;
-
-    return qn;
+    QuerySnapshot query = await firestore.get();
+    // sink.add(CalendarState(querySnapshot: query));
+    query.docs;
+    return query;
   }
 
-  Future gloire() async {
-    getCategorie()!.then((results) {
+  Future gloire(CategorieModel categorieModel) async {
+    getEvent(categorieModel)!.then((results) {
       sink.add(CalendarState(querySnapshot: results));
     });
   }
@@ -45,10 +50,10 @@ class BlocCalendar extends Bloc {
     colorCollection!.add(const Color(0xFF0A8043));
   }
 
-  BlocCalendar() {
+  BlocCalendar(CategorieModel categorieModel) {
     initializeEventColor();
     init();
-    gloire();
+    gloire(categorieModel);
   }
 
   @override
@@ -61,6 +66,9 @@ class CalendarState {
   QuerySnapshot? querySnapshot;
   dynamic data;
   List<Color>? colorCollection;
+  CategorieModel? categorieModel;
+  Future<QuerySnapshot>? qn;
+
   final bool isActive;
   String getMonthName(int month) {
     if (month == 01) {
@@ -90,5 +98,10 @@ class CalendarState {
     }
   }
 
-  CalendarState({this.isActive = false, this.querySnapshot, this.data});
+  CalendarState(
+      {this.isActive = false,
+      this.querySnapshot,
+      this.data,
+      this.qn,
+      this.categorieModel});
 }

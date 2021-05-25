@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/models/event_model.dart';
@@ -112,13 +114,6 @@ class SeePage extends StatelessWidget {
                                   ),
                                   SizedBox(
                                     height: 10.0,
-                                  ),
-                                  MyText(
-                                    label: categorieModel.debut == null
-                                        ? 'No Date'
-                                        : 'Date: ${trac.debut}',
-                                    color: Colors.black,
-                                    fontSize: 20.0,
                                   ),
                                 ],
                               );
@@ -272,8 +267,58 @@ Future<void> _showMyDialog(
                       onSaved: (newValue) =>
                           homeState!.eventModel!.title = newValue,
                     ),
-                    SizedBox(
-                      height: 20.0,
+                    Padding(
+                      padding: const EdgeInsets.all(05.0),
+                      child: DateTimePicker(
+                        type: DateTimePickerType.dateTimeSeparate,
+                        dateMask: 'd.MM.yyyy',
+                        initialValue: DateFormat('yyyy-MM-d HH:mm')
+                            .format(DateTime.now()),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2100),
+                        dateLabelText: 'Date',
+                        onChanged: (val) => print(val),
+                        validator: (val) =>
+                            val!.isEmpty ? 'Please a choose a Date' : null,
+                        onSaved: (newValue) =>
+                            homeState!.eventModel!.debut = newValue,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: 'Debut',
+                          labelStyle: TextStyle(fontSize: 18.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(05.0),
+                      child: DateTimePicker(
+                        type: DateTimePickerType.dateTimeSeparate,
+                        dateMask: 'd.MM.yyyy',
+                        initialValue: DateFormat('yyyy-MM-d HH:mm')
+                            .format(DateTime.now().add(Duration(hours: 2))),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2100),
+                        dateLabelText: 'Date of Begin',
+                        timeLabelText: 'Hour',
+                        onChanged: (val) => print(val),
+                        validator: (val) =>
+                            val!.isEmpty ? 'Please a choose a Date' : null,
+                        onSaved: (newValue) =>
+                            homeState!.eventModel!.fin = newValue,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: 'Fin',
+                          labelStyle: TextStyle(fontSize: 18.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -356,6 +401,57 @@ Future<void> _showMyUpdate(
                             labelText: 'Event',
                             onSaved: (newValue) => eventModel.title = newValue,
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: DateTimePicker(
+                              type: DateTimePickerType.dateTimeSeparate,
+                              dateMask: 'd.MM.yyyy',
+                              initialValue: '${eventModel.debut}',
+                              firstDate: DateTime.parse('${eventModel.debut}'),
+                              lastDate: DateTime(2100),
+                              dateLabelText: 'Date',
+                              onChanged: (val) => print(val),
+                              validator: (val) => val!.isEmpty
+                                  ? 'Please a choose a Date'
+                                  : null,
+                              onSaved: (newValue) =>
+                                  eventModel.debut = newValue,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: 'Debut',
+                                labelStyle: TextStyle(fontSize: 18.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 25.0),
+                            child: DateTimePicker(
+                              type: DateTimePickerType.dateTimeSeparate,
+                              dateMask: 'd.MM.yyyy',
+                              initialValue: '${eventModel.fin}',
+                              firstDate: DateTime.parse('${eventModel.fin}'),
+                              lastDate: DateTime(2100),
+                              dateLabelText: 'Date',
+                              onChanged: (val) => print(val),
+                              validator: (val) => val!.isEmpty
+                                  ? 'Please a choose a Date'
+                                  : null,
+                              onSaved: (newValue) => eventModel.fin = newValue,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: 'Fin',
+                                labelStyle: TextStyle(fontSize: 18.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: 40.0,
                           ),
@@ -368,7 +464,7 @@ Future<void> _showMyUpdate(
                                 _formKey.currentState!.save();
                                 print(eventModel.title);
 
-                                // print(homeState.categorieModel!.id);
+                                // print(homeState.eventModel!.id);
 
                                 await HomeState()
                                     .updateEvent(eventModel, categorieModel!)

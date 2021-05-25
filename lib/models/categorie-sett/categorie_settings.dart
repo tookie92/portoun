@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
@@ -25,7 +24,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
   switch (categorieModel.priority) {
     case 'Done':
       img = Image(
-        image: AssetImage('assets/images/done.png'),
+        image: AssetImage('assets/images/inprozesss.png'),
         height: 120.0,
         width: 120.0,
       );
@@ -35,7 +34,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
 
     case 'In Process':
       img = Image(
-        image: AssetImage('assets/images/inprozess.png'),
+        image: AssetImage('assets/images/defaults.png'),
         height: 120.0,
         width: 120.0,
       );
@@ -45,7 +44,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
 
     case 'Pending':
       img = Image(
-        image: AssetImage('assets/images/pending.png'),
+        image: AssetImage('assets/images/pendings.png'),
         height: 120.0,
         width: 120.0,
       );
@@ -63,129 +62,121 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
       clr = Colors.green;
   }
 
-  var item = Padding(
-    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-    child: Container(
-      height: size.height * 0.3,
-      width: size.width * 0.3,
-      decoration: BoxDecoration(
-        color: clr,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          BoxShadow(
+  var item = GestureDetector(
+      onTap: () =>
+          Navigator.push(context, BlocRouter().seecatPage(categorieModel)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
+        child: Container(
+          height: size.height * 0.3,
+          width: size.width * 0.3,
+          decoration: BoxDecoration(
             color: clr,
-            offset: Offset(5.0, 5.0),
-            blurRadius: 10.0,
-          ),
-        ],
-      ),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Positioned(
-            top: size.width * 0.0,
-            child: Container(
-              child: Bounce(
-                from: 10.0,
-                child: img,
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: clr,
+                offset: Offset(5.0, 5.0),
+                blurRadius: 10.0,
               ),
-            ),
+            ],
           ),
-          Positioned(
-            top: size.height * 0.12,
-            left: size.width * 0.07,
-            child: Container(
-              child: MyText(
-                label: '${categorieModel.title}',
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Positioned(
-            top: size.height * 0.02,
-            right: size.width * 0.06,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(20.0)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                child: MyText(
-                  label: prio,
-                  color: clr,
-                  fontSize: 11.0,
-                  fontWeight: FontWeight.w800,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned(
+                top: size.width * 0.0,
+                child: Container(
+                  child: Bounce(
+                    from: 10.0,
+                    child: img,
+                  ),
                 ),
               ),
-            ),
+              Positioned(
+                top: size.height * 0.12,
+                left: size.width * 0.07,
+                child: Container(
+                  child: MyText(
+                    label: '${categorieModel.title}',
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: size.height * 0.02,
+                right: size.width * 0.06,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 8.0),
+                    child: MyText(
+                      label: prio,
+                      color: clr,
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: size.height * 0.16,
+                left: size.width * 0.04,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () async {
+                        await showMyCategorie(context, categorieModel);
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.edit,
+                        color: Colors.white,
+                      ),
+                      iconSize: 20.0,
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        await HomeState().deleteCategorie(categorieModel);
+                        // await _showMyUpdate(context, categorieModel);
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.trashAlt,
+                        color: Colors.white,
+                      ),
+                      iconSize: 20.0,
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: size.height * 0.04,
+                left: size.height * 0.04,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: BlocHome().getEvent(categorieModel),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text('Loading ...');
+                    } else {
+                      return MyText(
+                        label: (snapshot.data!.docs.length == 0)
+                            ? 'No Events'
+                            : '${snapshot.data!.docs.length} Events',
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
+                      );
+                    }
+                  },
+                ),
+              )
+            ],
           ),
-          Positioned(
-            top: size.height * 0.16,
-            left: size.width * 0.04,
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    await Navigator.push(
-                        context, BlocRouter().seecatPage(categorieModel));
-                  },
-                  icon: FaIcon(
-                    FontAwesomeIcons.eye,
-                    color: Colors.white,
-                  ),
-                  iconSize: 20.0,
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await showMyCategorie(context, categorieModel);
-                  },
-                  icon: FaIcon(
-                    FontAwesomeIcons.edit,
-                    color: Colors.white,
-                  ),
-                  iconSize: 20.0,
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await HomeState().deleteCategorie(categorieModel);
-                    // await _showMyUpdate(context, categorieModel);
-                  },
-                  icon: FaIcon(
-                    FontAwesomeIcons.trashAlt,
-                    color: Colors.white,
-                  ),
-                  iconSize: 20.0,
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: size.height * 0.04,
-            left: size.height * 0.04,
-            child: StreamBuilder<QuerySnapshot>(
-              stream: BlocHome().getEvent(categorieModel),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('Loading ...');
-                } else {
-                  return MyText(
-                    label: (snapshot.data!.docs.length == 0)
-                        ? 'No Events'
-                        : '${snapshot.data!.docs.length} Events',
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                  );
-                }
-              },
-            ),
-          )
-        ],
-      ),
-    ),
-  );
+        ),
+      ));
 
   return item;
 }
@@ -245,58 +236,6 @@ Future showMyCategorie(
                               initialValue: categorieModel.title ?? '',
                               onSaved: (newValue) =>
                                   categorieModel.title = newValue,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: DateTimePicker(
-                              type: DateTimePickerType.dateTimeSeparate,
-                              dateMask: 'd.MM.yyyy',
-                              initialValue: '${categorieModel.debut}',
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2100),
-                              dateLabelText: 'Date',
-                              onChanged: (val) => print(val),
-                              validator: (val) => val!.isEmpty
-                                  ? 'Please a choose a Date'
-                                  : null,
-                              onSaved: (newValue) =>
-                                  categorieModel.debut = newValue,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                labelText: 'Debut',
-                                labelStyle: TextStyle(fontSize: 18.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 25.0),
-                            child: DateTimePicker(
-                              type: DateTimePickerType.dateTimeSeparate,
-                              dateMask: 'd.MM.yyyy',
-                              initialValue: '${categorieModel.fin}',
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2100),
-                              dateLabelText: 'Date',
-                              onChanged: (val) => print(val),
-                              validator: (val) => val!.isEmpty
-                                  ? 'Please a choose a Date'
-                                  : null,
-                              onSaved: (newValue) =>
-                                  categorieModel.fin = newValue,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                labelText: 'Fin',
-                                labelStyle: TextStyle(fontSize: 18.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
                             ),
                           ),
                           DropdownButtonFormField<String>(

@@ -25,7 +25,7 @@ class MyTextField extends StatelessWidget {
       obscureText: obscureText,
       onSaved: onSaved,
       validator: validator,
-      style: GoogleFonts.signika(color: Colors.black),
+      style: GoogleFonts.montserrat(color: Colors.black),
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: GoogleFonts.montserrat(color: Colors.black),

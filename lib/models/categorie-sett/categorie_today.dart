@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:portoun/models/categorie_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
 
@@ -98,16 +97,7 @@ showCategorieToday(DocumentSnapshot res, BuildContext context) {
             Positioned(
               top: 50.0,
               left: 120.0,
-              child: Container(
-                child: MyText(
-                  label: categorieModel.debut == null
-                      ? 'Please add a Date'
-                      : DateFormat.yMEd('fr')
-                          .format(DateTime.parse('${categorieModel.debut}')),
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              child: Container(),
             ),
           ],
         )),

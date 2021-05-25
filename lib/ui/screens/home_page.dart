@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -55,7 +54,7 @@ class HomePage extends StatelessWidget {
                     ),
                     leading: IconButton(
                         onPressed: () => Navigator.push(
-                            context, BlocRouter().calendrierPage()),
+                            context, BlocRouter().indexCalpage()),
                         icon: FaIcon(
                           FontAwesomeIcons.calendarAlt,
                           color: Colors.black,
@@ -90,82 +89,6 @@ class HomePage extends StatelessWidget {
                                                         .categorieModel!
                                                         .title = newValue,
                                                     labelText: 'title',
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      05.0),
-                                                  child: DateTimePicker(
-                                                    type: DateTimePickerType
-                                                        .dateTimeSeparate,
-                                                    dateMask: 'd.MM.yyyy',
-                                                    initialValue: DateFormat(
-                                                            'yyyy-MM-d HH:mm')
-                                                        .format(DateTime.now()),
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(2100),
-                                                    dateLabelText: 'Date',
-                                                    onChanged: (val) =>
-                                                        print(val),
-                                                    validator: (val) => val!
-                                                            .isEmpty
-                                                        ? 'Please a choose a Date'
-                                                        : null,
-                                                    onSaved: (newValue) => truc
-                                                        .categorieModel!
-                                                        .debut = newValue,
-                                                    decoration: InputDecoration(
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      labelText: 'Debut',
-                                                      labelStyle: TextStyle(
-                                                          fontSize: 18.0),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      05.0),
-                                                  child: DateTimePicker(
-                                                    type: DateTimePickerType
-                                                        .dateTimeSeparate,
-                                                    dateMask: 'd.MM.yyyy',
-                                                    initialValue: DateFormat(
-                                                            'yyyy-MM-d HH:mm')
-                                                        .format(DateTime.now()
-                                                            .add(Duration(
-                                                                hours: 2))),
-                                                    firstDate: DateTime.now(),
-                                                    lastDate: DateTime(2100),
-                                                    dateLabelText: 'Date',
-                                                    onChanged: (val) =>
-                                                        print(val),
-                                                    validator: (val) => val!
-                                                            .isEmpty
-                                                        ? 'Please a choose a Date'
-                                                        : null,
-                                                    onSaved: (newValue) => truc
-                                                        .categorieModel!
-                                                        .fin = newValue,
-                                                    decoration: InputDecoration(
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      labelText: 'Debut',
-                                                      labelStyle: TextStyle(
-                                                          fontSize: 18.0),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                      ),
-                                                    ),
                                                   ),
                                                 ),
                                                 Padding(

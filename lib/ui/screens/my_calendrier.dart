@@ -1,19 +1,26 @@
+//import 'dart:math';
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import 'package:portoun/blocs/blocs.dart';
 import 'package:portoun/models/categorie_model.dart';
+import 'package:portoun/models/event_model.dart';
 import 'package:portoun/ui/widgets/widgets.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class MyCalendar extends StatelessWidget {
+  final CategorieModel? categorieModel;
+  MyCalendar(this.categorieModel);
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<BlocCalendar>(context);
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -55,21 +62,26 @@ class MyCalendar extends StatelessWidget {
                 ),
               );
             } else {
-              var iterable = truc.querySnapshot!.docs.toList();
+              /* if (truc.querySnapshot == null) {
+                print('du bist stark');
+              } else {
+                print('ok');
+              }*/
               List<Meeting>? collection = [];
 
+              var iterable = truc.querySnapshot!.docs.toList();
+
               for (var element in iterable) {
-                CategorieModel? categorieModel =
-                    CategorieModel.fromSnapShot(element);
+                EventModel? eventModel = EventModel.fromSnapshot(element);
                 final Random random = new Random();
                 collection.add(
                   Meeting(
-                    eventName: '${categorieModel.title}',
+                    eventName: '${eventModel.title}',
                     isAllDay: false,
                     from: DateFormat('yyyy-MM-dd HH:mm')
-                        .parse('${categorieModel.debut}'),
+                        .parse('${eventModel.debut}'),
                     to: DateFormat('yyyy-MM-dd HH:mm')
-                        .parse('${categorieModel.fin}'),
+                        .parse('${eventModel.fin}'),
                     background: bloc.colorCollection![random.nextInt(9)],
                     resourceId: '0001',
                   ),
