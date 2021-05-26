@@ -24,7 +24,7 @@ showCategorie(DocumentSnapshot res, BuildContext context) {
   switch (categorieModel.priority) {
     case 'Done':
       img = Image(
-        image: AssetImage('assets/images/inprozesss.png'),
+        image: AssetImage('assets/images/done.png'),
         height: 120.0,
         width: 120.0,
       );
